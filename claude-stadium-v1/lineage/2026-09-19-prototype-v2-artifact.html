@@ -1,0 +1,482 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THEBRIANWARNER — Prototype v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#101319; --bg-panel:#171B22; --bg-panel-raised:#1D222B; --line:#2A303B;
+    --ink:#ECE8DC; --ink-dim:#9CA3AF; --ink-faint:#6B7280;
+    --brass:#C9A24B; --brass-dim:#8A7136; --field:#3C5A44;
+    --stamp:#9A5A45; --stamp-bg:rgba(154,90,69,0.12);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg); color:var(--ink); font-family:'IBM Plex Sans', system-ui, sans-serif; line-height:1.55; -webkit-font-smoothing:antialiased;}
+  ::selection{background:var(--brass); color:#12151A;}
+  h1,h2,h3,h4{font-family:'Fraunces', Georgia, serif; font-weight:600; margin:0; letter-spacing:-0.01em;}
+  a{color:inherit;} img{max-width:100%; display:block;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 22px;}
+  button{font-family:inherit;}
+
+  header.site{position:sticky; top:0; z-index:50; background:rgba(16,19,25,0.94); backdrop-filter:blur(8px); border-bottom:1px solid var(--line);}
+  .nav-row{display:flex; align-items:center; justify-content:space-between; padding:14px 0; gap:12px;}
+  .wordmark{font-family:'Fraunces', serif; font-weight:700; font-size:1rem; letter-spacing:0.02em; white-space:nowrap; cursor:pointer;}
+  .wordmark sup{font-size:0.5em; font-weight:500;}
+  nav.primary{display:flex; gap:2px; overflow-x:auto; scrollbar-width:none;}
+  nav.primary::-webkit-scrollbar{display:none;}
+  nav.primary button{font-size:0.78rem; font-weight:500; background:none; border:none; color:var(--ink-dim); padding:8px 10px; cursor:pointer; white-space:nowrap; border-bottom:2px solid transparent; transition:color .15s, border-color .15s;}
+  nav.primary button:hover{color:var(--ink);}
+  nav.primary button.active{color:var(--brass); border-bottom-color:var(--brass);}
+
+  main{min-height:60vh;}
+  section{display:none; padding:48px 0 80px;}
+  section.active{display:block;}
+  .eyebrow-line{display:flex; align-items:center; gap:10px; margin-bottom:16px; font-family:'IBM Plex Mono'; font-size:0.7rem; color:var(--brass-dim); letter-spacing:0.04em;}
+  .eyebrow-line::after{content:""; flex:1; height:1px; background:var(--line);}
+  .back-link{font-size:0.8rem; color:var(--ink-dim); background:none; border:none; cursor:pointer; padding:0; margin-bottom:20px;}
+  .back-link:hover{color:var(--brass);}
+
+  .hero{padding:56px 0 36px; border-bottom:1px solid var(--line);}
+  .hero .stamp-standard{font-family:'IBM Plex Mono'; font-size:0.78rem; color:var(--brass-dim); letter-spacing:0.05em; margin-bottom:14px;}
+  .hero h1{font-size:clamp(2rem, 7vw, 3.3rem); line-height:1.05; max-width:14ch;}
+  .hero .tagline{font-family:'Fraunces', serif; font-style:italic; font-weight:500; font-size:clamp(1rem, 3vw, 1.3rem); color:var(--brass); margin-top:16px;}
+  .front-doors{display:grid; grid-template-columns:1fr; gap:10px; margin-top:34px;}
+  @media(min-width:640px){ .front-doors{grid-template-columns:1fr 1fr 1fr;} }
+  .door-card{border:1px solid var(--brass-dim); background:var(--bg-panel-raised); padding:20px 18px; cursor:pointer; text-align:left; color:var(--ink); font-family:inherit;}
+  .door-card:hover{border-color:var(--brass); background:#232935;}
+  .door-card h3{font-size:1rem;}
+  .door-card p{font-size:0.82rem; color:var(--ink-dim); margin:6px 0 0;}
+  .reveal-link{margin-top:24px; background:none; border:none; color:var(--ink-dim); font-size:0.85rem; cursor:pointer; text-decoration:underline; text-underline-offset:3px; padding:0;}
+  .reveal-link:hover{color:var(--brass);}
+  .more-doors{display:none; grid-template-columns:1fr; gap:8px; margin-top:16px;}
+  .more-doors.show{display:grid;}
+  @media(min-width:640px){ .more-doors{grid-template-columns:1fr 1fr;} }
+  .entry-card{border:1px solid var(--line); background:var(--bg-panel); padding:14px 16px; cursor:pointer; text-align:left; color:var(--ink); font-family:inherit;}
+  .entry-card:hover{border-color:var(--brass-dim);}
+  .entry-card h4{font-size:0.92rem;}
+  .entry-card p{font-size:0.78rem; color:var(--ink-dim); margin:4px 0 0;}
+
+  .countdown-panel{border:1px solid var(--line); background:var(--bg-panel); padding:26px 20px; margin:28px 0; text-align:center;}
+  .cd-label{font-family:'IBM Plex Mono'; font-size:0.72rem; color:var(--ink-dim); letter-spacing:0.03em;}
+  .countdown-grid{display:flex; justify-content:center; gap:16px; margin-top:14px; flex-wrap:wrap;}
+  .countdown-grid div{min-width:60px;}
+  .countdown-grid .n{font-family:'IBM Plex Mono'; font-size:clamp(1.5rem,6vw,2.2rem); font-weight:600; color:var(--brass);}
+  .countdown-grid .u{font-size:0.65rem; color:var(--ink-faint); letter-spacing:0.04em; margin-top:2px;}
+  .countdown-dual{font-family:'Fraunces', serif; font-style:italic; color:var(--ink-dim); margin-top:14px; font-size:0.9rem;}
+
+  .quote-block{border-left:2px solid var(--brass); padding:4px 0 4px 18px; margin:24px 0; font-family:'Fraunces', serif; font-size:1.1rem; font-style:italic; color:var(--ink); max-width:50ch;}
+  .lede{font-size:1.05rem; color:var(--ink); max-width:60ch;}
+  .sub{color:var(--ink-dim); max-width:60ch; font-size:0.92rem;}
+
+  .stadium-grid{display:grid; grid-template-columns:1fr; gap:1px; background:var(--line); border:1px solid var(--line); margin-top:22px;}
+  @media(min-width:640px){ .stadium-grid{grid-template-columns:1fr 1fr;} }
+  @media(min-width:980px){ .stadium-grid{grid-template-columns:1fr 1fr 1fr;} }
+  .room-cell{background:var(--bg-panel); padding:18px; cursor:pointer; text-align:left; color:var(--ink); font-family:inherit; width:100%; border:none;}
+  .room-cell:hover{background:var(--bg-panel-raised);}
+  .room-cell h4{font-size:0.98rem; display:flex; align-items:baseline; justify-content:space-between; gap:8px;}
+  .room-cell .go{font-size:0.65rem; color:var(--brass-dim); font-family:'IBM Plex Mono';}
+  .room-cell p{font-size:0.82rem; color:var(--ink-dim); margin-top:6px;}
+  .room-cell.linked{border-left:2px solid var(--brass-dim);}
+
+  .subtabs{display:flex; gap:4px; overflow-x:auto; margin-top:22px; border-bottom:1px solid var(--line); scrollbar-width:none;}
+  .subtabs::-webkit-scrollbar{display:none;}
+  .subtabs button{font-size:0.82rem; color:var(--ink-dim); background:none; border:none; padding:10px 14px; cursor:pointer; white-space:nowrap; border-bottom:2px solid transparent;}
+  .subtabs button.active{color:var(--brass); border-bottom-color:var(--brass);}
+  .subpanel{display:none; padding-top:22px;}
+  .subpanel.active{display:block;}
+
+  .track-list{display:flex; flex-direction:column; gap:10px; margin-top:20px;}
+  .track{border:1px solid var(--line); background:var(--bg-panel); padding:14px 16px;}
+  .track .t-name{font-family:'IBM Plex Mono'; font-size:0.7rem; color:var(--brass); letter-spacing:0.03em;}
+  .track p{margin:6px 0 0; font-size:0.88rem; color:var(--ink-dim);}
+  .anchor-list{list-style:none; margin:18px 0 0; padding:0; border-top:1px solid var(--line);}
+  .anchor-list li{padding:12px 0; border-bottom:1px solid var(--line); font-size:0.9rem;}
+  .anchor-list .tag{font-family:'IBM Plex Mono'; font-size:0.62rem; color:var(--ink-faint); display:block; margin-bottom:4px;}
+
+  .card-grid{display:grid; grid-template-columns:1fr; gap:14px; margin-top:24px;}
+  @media(min-width:700px){ .card-grid{grid-template-columns:1fr 1fr;} }
+  .card{border:1px solid var(--line); background:var(--bg-panel); padding:18px;}
+  .card.flagship{border-color:var(--brass-dim); background:var(--bg-panel-raised);}
+  .card h4{font-size:1rem;}
+  .card p{font-size:0.85rem; color:var(--ink-dim); margin-top:8px;}
+  .card .status{font-family:'IBM Plex Mono'; font-size:0.65rem; color:var(--field); margin-top:10px; display:block;}
+  .card .cta-mini{margin-top:12px; background:none; border:1px solid var(--brass-dim); color:var(--brass); font-size:0.78rem; padding:7px 12px; cursor:pointer;}
+  .card .cta-mini:hover{background:var(--brass); color:#14171D;}
+
+  .stamp{display:inline-block; border:1px solid var(--stamp); color:var(--stamp); background:var(--stamp-bg); font-family:'IBM Plex Mono'; font-size:0.65rem; padding:2px 8px; letter-spacing:0.03em; transform:rotate(-1deg); margin:2px 4px 2px 0; white-space:nowrap;}
+  .stamp-block{border:1px dashed var(--stamp); background:var(--stamp-bg); padding:14px 16px; margin:18px 0; font-size:0.85rem; color:#D9B4A6;}
+  .stamp-block strong{color:var(--stamp); font-family:'IBM Plex Mono'; font-size:0.72rem; display:block; margin-bottom:4px;}
+  .integ-block{border:1px dashed var(--brass-dim); background:rgba(201,162,75,0.08); padding:14px 16px; margin:18px 0; font-size:0.85rem; color:#E3CE9C;}
+  .integ-block strong{color:var(--brass); font-family:'IBM Plex Mono'; font-size:0.72rem; display:block; margin-bottom:4px;}
+
+  .cc-panel{border:1px solid var(--brass-dim); background:var(--bg-panel-raised); padding:30px 24px; margin-top:24px;}
+  .cc-price{font-family:'IBM Plex Mono'; font-size:1.9rem; color:var(--brass); margin-top:8px;}
+  .cc-questions{margin-top:20px; display:flex; flex-direction:column; gap:8px;}
+  .cc-questions .q{font-size:0.9rem; color:var(--ink-dim); padding-left:14px; border-left:1px solid var(--line);}
+  .cta-btn{display:inline-block; margin-top:22px; background:var(--brass); color:#14171D; font-weight:600; font-size:0.88rem; padding:12px 22px; border:none; cursor:pointer;}
+  .cta-btn:hover{background:#D8B35F;}
+  .cta-btn.ghost{background:none; border:1px solid var(--brass-dim); color:var(--brass);}
+  .cta-btn.ghost:hover{background:var(--brass); color:#14171D;}
+
+  .store-list{list-style:none; padding:0; margin:20px 0 0; display:grid; grid-template-columns:1fr; gap:8px;}
+  @media(min-width:640px){ .store-list{grid-template-columns:1fr 1fr;} }
+  .store-item{border:1px solid var(--line); background:var(--bg-panel); padding:14px 16px; font-family:'IBM Plex Mono'; font-size:0.85rem; letter-spacing:0.03em; color:var(--brass);}
+
+  .booking-form{border:1px solid var(--line); background:var(--bg-panel); padding:24px 20px; margin-top:24px;}
+  .booking-form label{display:block; font-size:0.78rem; color:var(--ink-dim); margin:14px 0 5px;}
+  .booking-form input, .booking-form textarea{width:100%; background:var(--bg); border:1px solid var(--line); color:var(--ink-faint); padding:10px 12px; font-family:inherit; font-size:0.88rem;}
+  .booking-form input:disabled, .booking-form textarea:disabled{cursor:not-allowed;}
+
+  footer.site{border-top:1px solid var(--line); padding:36px 0 56px; margin-top:20px;}
+  footer.site .credo{font-family:'Fraunces', serif; font-style:italic; font-size:1rem; color:var(--ink-dim); max-width:46ch;}
+  footer.site .foot-links{display:flex; gap:16px; margin-top:20px; flex-wrap:wrap; font-size:0.78rem; color:var(--ink-faint);}
+  footer.site .legal{margin-top:24px; font-size:0.7rem; color:var(--ink-faint);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav-row">
+    <div class="wordmark" data-target="home">THEBRIANWARNER<sup>™</sup></div>
+    <nav class="primary" id="primaryNav">
+      <button data-target="home" class="active">Home</button>
+      <button data-target="stadium">Stadium</button>
+      <button data-target="investigation">The Investigation</button>
+      <button data-target="training">Investigator Training</button>
+      <button data-target="conversation">Championship Conversation</button>
+      <button data-target="mdo">Million Dollar Opportunity</button>
+      <button data-target="store">Team Store</button>
+      <button data-target="products">Books &amp; Products</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section id="home" class="active">
+    <div class="hero">
+      <div class="stamp-standard">THE STAMP. THE STANDARD.</div>
+      <h1>It's not one thing.<br>It's everything.</h1>
+      <div class="tagline">I WIN · YOU WIN · WE WIN.</div>
+
+      <div class="front-doors">
+        <button class="door-card" data-target="stadium">
+          <h3>Enter the Stadium</h3>
+          <p>The home field — Tunnel to Jumbotron.</p>
+        </button>
+        <button class="door-card" data-target="investigation">
+          <h3>BDUB v. BDUB</h3>
+          <p>The case. The investigation. Three vantage points.</p>
+        </button>
+        <button class="door-card" data-target="conversation">
+          <h3>Championship Conversation</h3>
+          <p>15 minutes. One conversation. $100.</p>
+        </button>
+      </div>
+
+      <button class="reveal-link" id="revealMore">See the rest of the ecosystem ↓</button>
+      <div class="more-doors" id="moreDoors">
+        <button class="entry-card" data-target="training"><h4>Investigator Training</h4><p>101, 102, Advanced — built from the field.</p></button>
+        <button class="entry-card" data-target="mdo"><h4>Million Dollar Opportunity</h4><p>Institutional workshop — flagship product.</p></button>
+        <button class="entry-card" data-target="store"><h4>Team Store</h4><p>Stadium commerce, open to everybody.</p></button>
+        <button class="entry-card" data-target="products"><h4>Books &amp; Products</h4><p>Field Manual, Workbook, Planner, Field Pass, CPS.</p></button>
+      </div>
+    </div>
+
+    <div style="padding-top:40px;">
+      <div class="eyebrow-line">the record</div>
+      <div class="quote-block">"What do you need to put down. And what do you need to pick back up."</div>
+      <p class="sub">THEBRIANWARNER™ is a standard and a stamp — not just a name. The mission: teach regular Joe and regular Jane to develop an operating system for pressure, taught by proximity through championship conversation.</p>
+    </div>
+  </section>
+
+  <section id="stadium">
+    <button class="back-link" data-target="home">← Back to Home</button>
+    <div class="eyebrow-line">home field</div>
+    <h2 style="font-size:2rem;">THEBRIANWARNER Stadium</h2>
+    <p class="lede" style="margin-top:14px;">The larger public-facing world. Internal organizational architecture doesn't have to equal every page of website navigation — but every established space has a home here.</p>
+
+    <div class="stadium-grid">
+      <button class="room-cell" data-target="home"><h4>Tunnel</h4><p>The entrance. Where the visitor walks in.</p></button>
+      <button class="room-cell linked" data-target="conversation"><h4>Field <span class="go">→ Championship Conversation</span></h4><p>Execution — where the Championship Conversation and Walk Talks happen.</p></button>
+      <button class="room-cell" data-target="stadium"><h4>Sideline</h4><p class="stamp" style="margin-top:8px;">COPY — SOURCE NEEDED</p></button>
+      <button class="room-cell linked" data-target="training"><h4>Locker Room <span class="go">→ Investigator Training</span></h4><p>Preparation and training ground.</p></button>
+      <button class="room-cell linked" data-target="investigation"><h4>Press Box <span class="go">→ The Investigation</span></h4><p>High-level thinking, analysis, the shows — BDUB v. BDUB, Defense Investigator Warner, Marshal 46.</p></button>
+      <button class="room-cell linked" data-target="products"><h4>Coach's Office <span class="go">→ Books &amp; Products</span></h4><p>Doctrine, Operation: I Am a Champion™, books, frameworks, playbooks.</p></button>
+      <button class="room-cell" data-target="stadium"><h4>Front Office</h4><p>Business and booking headquarters. <span class="stamp">BOOKING — SEE BELOW</span></p></button>
+      <button class="room-cell linked" data-target="store"><h4>Team Store <span class="go">→ Team Store</span></h4><p>Stadium commerce, generally available to everybody.</p></button>
+      <button class="room-cell" data-target="stadium"><h4>Jumbotron</h4><p class="stamp" style="margin-top:8px;">COPY / MEDIA REEL — SOURCE NEEDED</p></button>
+    </div>
+
+    <div class="stamp-block" style="margin-top:22px;">
+      <strong>NOTE ON ROOM ARCHITECTURE</strong>
+      These nine spaces are preserved exactly as the established Stadium architecture (Tunnel, Field, Sideline, Locker Room, Press Box, Coach's Office, Front Office, Team Store, Jumbotron). Internal audience destinations — Film Room, Player's Lounge, Inside the Booth, Field Pass — live inside these rooms (mainly Press Box and Coach's Office) rather than replacing them, per the current ruling that internal organizational architecture does not have to equal primary website navigation.
+    </div>
+  </section>
+
+  <section id="investigation">
+    <button class="back-link" data-target="home">← Back to Home</button>
+    <div class="eyebrow-line">Press Box</div>
+    <h2 style="font-size:2rem;">The Investigation</h2>
+    <p class="lede" style="margin-top:14px;">BDUB v. BDUB, Defense Investigator Warner, and Marshal 46 are not three separate shows. They're the same investigation, told from three vantage points.</p>
+
+    <div class="subtabs" id="invSubtabs">
+      <button data-sub="inv-overview" class="active">Overview</button>
+      <button data-sub="inv-bdub">BDUB v. BDUB</button>
+      <button data-sub="inv-diw">Defense Investigator Warner</button>
+      <button data-sub="inv-m46">Marshal 46</button>
+    </div>
+
+    <div class="subpanel active" id="inv-overview">
+      <div class="countdown-panel">
+        <div class="cd-label">TRIAL DATE / RETIREMENT DATE</div>
+        <div class="countdown-grid" id="countdown">
+          <div><div class="n" id="cd-days">--</div><div class="u">days</div></div>
+          <div><div class="n" id="cd-hours">--</div><div class="u">hours</div></div>
+          <div><div class="n" id="cd-min">--</div><div class="u">minutes</div></div>
+          <div><div class="n" id="cd-sec">--</div><div class="u">seconds</div></div>
+        </div>
+        <div class="countdown-dual">March 8, 2031 — the day of the trial is the day of retirement.</div>
+      </div>
+      <div class="quote-block">Are you a champion? If you pull this off, you are. If you don't. You know what that means. Come along for the ride. Let's see what play he runs next.</div>
+      <p class="sub">Brian Warner is fictionally charged with claiming to be a champion when he is not. Three tracks run simultaneously through the record — testimony, doctrine, and current behavior — and each vantage point below carries the investigation forward from a different position.</p>
+    </div>
+
+    <div class="subpanel" id="inv-bdub">
+      <h3 style="font-size:1.05rem;">BDUB v. BDUB — The Courtroom</h3>
+      <p class="sub" style="margin-top:8px;">Testimony + doctrine. The main trial. Verdict question: "Are you a champion?"</p>
+      <div class="track-list">
+        <div class="track"><span class="t-name">TRACK 1 — TESTIMONY</span><p>The factual moment. Specific, placed in time.</p></div>
+        <div class="track"><span class="t-name">TRACK 2 — DOCTRINE</span><p>What the moment reveals through the Championship Performance System.</p></div>
+        <div class="track"><span class="t-name">TRACK 3 — CURRENT BEHAVIOR</span><p>Brian remains under investigation during the trial — reverse engineering in real time.</p></div>
+      </div>
+      <h4 style="font-size:0.95rem; margin-top:28px;">Zero episode — confirmed anchors</h4>
+      <ul class="anchor-list">
+        <li><span class="tag">OPENING</span>Formal AUSA examination opening.</li>
+        <li><span class="tag">CREDENTIAL / CASE STATEMENT</span>Navigating the world since May 2, 1990 without his father — would Virgil Warner consider him a champion?</li>
+        <li><span class="tag">SEQUENCE</span>The "Got the Scholly" sequence.</li>
+        <li><span class="tag">TESTIMONY</span>NFL silence.</li>
+        <li><span class="tag">TESTIMONY</span>The "YOU GOTTA BELIEVE" tattoo.</li>
+        <li><span class="tag">CLOSING SIGNATURE</span>"The case continues."</li>
+      </ul>
+      <div style="margin-top:16px;"><span class="stamp">EPISODES BEYOND ZERO EP — SOURCE NEEDED</span> <span class="stamp">RELEASE SCHEDULE — SOURCE NEEDED</span></div>
+    </div>
+
+    <div class="subpanel" id="inv-diw">
+      <h3 style="font-size:1.05rem;">Defense Investigator Warner — The Evidence Room</h3>
+      <p class="sub" style="margin-top:8px;">Investigative deep dive, law enforcement procedure, how Brian operated in the field. BDUB v. BDUB feeds this vantage point when testimony requires investigative depth.</p>
+      <p class="sub" style="margin-top:10px;">Built from real professional experience: fillable investigation file templates, witness interview questionnaires, and a pretrial release case management system grounded in 18 U.S.C. § 3142(b) and § 3142(g).</p>
+      <div class="stamp-block">
+        <strong>NOT DISPLAYED</strong>
+        No protected client information, official case information, privileged material, or confidential work product appears anywhere in this prototype.
+      </div>
+    </div>
+
+    <div class="subpanel" id="inv-m46">
+      <h3 style="font-size:1.05rem;">Marshal 46 — The Lineage Room</h3>
+      <p class="sub" style="margin-top:8px;">Federal law enforcement lineage — where the operational standard came from. Carries the operational lineage that BDUB v. BDUB and Defense Investigator Warner draw on.</p>
+      <div style="margin-top:16px;"><span class="stamp">EPISODE / FORMAT DETAIL — SOURCE NEEDED</span></div>
+    </div>
+
+    <div class="stamp-block" style="margin-top:28px;">
+      <strong>ARCHITECTURE FLAG</strong>
+      Prior source material listed additional media properties — Sixty Seconds Go, Media Division, Lena Mae, Regular Joe Program — alongside these three shows, and a separate discrepancy was flagged over whether Million Dollar Opportunity belonged in that media list. The current Reconciliation Log resolves Million Dollar Opportunity as a flagship product, not media (see its own page). The exact relationship of Sixty Seconds Go, Media Division, Lena Mae, and Regular Joe Program to this three-vantage-point Investigation is not fully established in what's retrievable this session. Not reconciled — held here for QB1 review rather than merged into the Investigation or given pages of their own.
+    </div>
+  </section>
+
+  <section id="training">
+    <button class="back-link" data-target="home">← Back to Home</button>
+    <div class="eyebrow-line">Locker Room</div>
+    <h2 style="font-size:2rem;">Defense Investigator Warner — Training</h2>
+    <p class="lede" style="margin-top:14px;">Federal criminal defense investigation training, built from real operational experience — not a generic online course.</p>
+
+    <div class="card-grid">
+      <div class="card"><h4>Investigator 101</h4><p>Foundational level.</p><span class="stamp" style="display:inline-block; margin-top:10px;">CURRICULUM — SOURCE NEEDED</span></div>
+      <div class="card"><h4>Investigator 102</h4><p>Builds on 101.</p><span class="stamp" style="display:inline-block; margin-top:10px;">CURRICULUM — SOURCE NEEDED</span></div>
+      <div class="card"><h4>Advanced Investigator Training</h4><p>Advanced level, distinct from 101/102.</p><span class="stamp" style="display:inline-block; margin-top:10px;">CURRICULUM — SOURCE NEEDED</span></div>
+    </div>
+
+    <p class="sub" style="margin-top:24px;">A Notion-based investigation operating system — "Defense Investigator Warner" — mirrors a Trigger → Action → Decision → Next Action → Status workflow across case stages.</p>
+    <button class="cta-btn" data-book="Investigator Training">Request Information</button>
+  </section>
+
+  <section id="conversation">
+    <button class="back-link" data-target="home">← Back to Home</button>
+    <div class="eyebrow-line">The Field — the front door</div>
+    <h2 style="font-size:2rem;">The Championship Conversation™</h2>
+    <p class="lede" style="margin-top:14px;">A structured conversation about performance. Not therapy, not consulting, not motivational speaking, not traditional life coaching.</p>
+
+    <div class="cc-panel">
+      <div style="font-family:'IBM Plex Mono'; font-size:0.72rem; color:var(--ink-dim);">15-MINUTE CHAMPIONSHIP CONVERSATION</div>
+      <div class="cc-price">$100</div>
+      <p class="sub" style="margin-top:12px;">Money-back guarantee, stated live in the record. The objective is to create movement, not solve your entire life — movement creates momentum, momentum changes seasons.</p>
+      <div class="cc-questions">
+        <div class="q">Who are you right now?</div>
+        <div class="q">Where are you playing from?</div>
+        <div class="q">What's putting pressure on you?</div>
+        <div class="q">What scoreboard are you using?</div>
+        <div class="q">What penalties keep showing up?</div>
+        <div class="q">What is your next first down?</div>
+      </div>
+      <button class="cta-btn" data-book="Championship Conversation">Book the Conversation</button>
+    </div>
+  </section>
+
+  <section id="mdo">
+    <button class="back-link" data-target="home">← Back to Home</button>
+    <div class="eyebrow-line">flagship product</div>
+    <h2 style="font-size:2rem;">Million Dollar Opportunity</h2>
+    <p class="lede" style="margin-top:14px;">An institutional workshop Brian Warner can be hired to deliver — the opportunity students have in front of them right now, and the cost of wasting it.</p>
+
+    <div class="card flagship" style="margin-top:24px;">
+      <h4>Initial target market</h4>
+      <p>Mississippi junior/community colleges and Mississippi high schools — including Hinds, Itawamba, and Holmes, and the other Mississippi colleges in that category.</p>
+    </div>
+
+    <div class="stamp-block">
+      <strong>SOURCE NEEDED</strong>
+      Million Dollar Opportunity has real historical roots in Brian Warner's existing body of work. This prototype does not invent the million-dollar calculation, curriculum, exercises, historical development, testimonials, statistics, promised outcomes, or institutional claims. Deeper product development is parked for a Front Office historical research pass.
+    </div>
+
+    <button class="cta-btn" data-book="Million Dollar Opportunity — Institutional Booking">Request Institutional Booking</button>
+  </section>
+
+  <section id="store">
+    <button class="back-link" data-target="home">← Back to Home</button>
+    <div class="eyebrow-line">Stadium commerce</div>
+    <h2 style="font-size:2rem;">Team Store</h2>
+    <p class="lede" style="margin-top:14px;">Public Stadium commerce, generally available to everybody. No merchandise, inventory, pricing, vendors, or fulfillment promises are invented here — this establishes the commerce environment and its place inside the Stadium.</p>
+
+    <h3 style="font-size:0.95rem; margin-top:28px;">Required available concepts</h3>
+    <p class="sub" style="margin-top:6px;">These T-shirt concepts are required to remain available in the ecosystem architecture. Required availability doesn't mean designed, manufactured, stocked, listed, sold, or approved for deployment.</p>
+    <ul class="store-list">
+      <li class="store-item">COACH 7</li>
+      <li class="store-item">MR. TEENAGER</li>
+      <li class="store-item">FISA</li>
+      <li class="store-item">CASE DISMISSED</li>
+      <li class="store-item">NOT GUILTY</li>
+    </ul>
+    <div style="margin-top:20px;"><span class="stamp">INVENTORY — SOURCE NEEDED</span> <span class="stamp">PRICING — SOURCE NEEDED</span> <span class="stamp">FULFILLMENT — SOURCE NEEDED</span></div>
+    <div class="integ-block" style="margin-top:18px;"><strong>INTEGRATION PENDING</strong>Commerce/payment platform not yet selected.</div>
+  </section>
+
+  <section id="products">
+    <button class="back-link" data-target="home">← Back to Home</button>
+    <div class="eyebrow-line">Coach's Office</div>
+    <h2 style="font-size:2rem;">Books &amp; Products</h2>
+    <p class="lede" style="margin-top:14px;">Field Manual teaches the system. Workbook develops understanding. Daily Planner governs execution.</p>
+
+    <div class="card-grid">
+      <div class="card"><h4>Operation: I Am a Champion™ (Book)</h4><p>Available on KDP. Second edition in development.</p><span class="status">AVAILABLE</span></div>
+      <div class="card"><h4>Championship Workbook</h4><p>Multi-platform personal development product. Primary audience: middle/high school students, with parallel tracks for student-athletes, college programs, and executives.</p><span class="status">AVAILABLE — championshipworkbook.com</span></div>
+      <div class="card"><h4>Championship Daily Planner</h4><p>Print planner — governs daily execution of the system.</p><span class="status">COMING SOON</span></div>
+      <div class="card"><h4>Field Pass</h4><p>Premium membership — courses, coaching, Mini Camp, downloads, exclusive episodes, workbooks. Includes Saturday School.</p><span class="status">AVAILABLE</span></div>
+      <div class="card"><h4>CPS Licensing</h4><p>Bring the Championship Performance System™ into organizations.</p><button class="cta-mini" data-book="CPS Licensing">Inquire</button></div>
+      <div class="card"><h4>Speaking / Keynotes</h4><p>Booking available.</p><button class="cta-mini" data-book="Speaking / Keynotes">Inquire</button></div>
+    </div>
+  </section>
+
+  <section id="booking">
+    <button class="back-link" id="bookingBack">← Back</button>
+    <div class="eyebrow-line">Front Office</div>
+    <h2 style="font-size:2rem;" id="bookingTitle">Request</h2>
+    <p class="lede" style="margin-top:14px;">This is a working interface, not a dead button. The booking/payment service behind it hasn't been selected yet.</p>
+    <div class="integ-block"><strong>INTEGRATION PENDING</strong>Booking, scheduling, and payment system not yet connected. No submission is transmitted from this prototype.</div>
+    <div class="booking-form">
+      <label>Name</label>
+      <input type="text" disabled placeholder="Not yet connected">
+      <label>Email</label>
+      <input type="email" disabled placeholder="Not yet connected">
+      <label>What you're requesting</label>
+      <input type="text" disabled id="bookingWhat">
+      <label>Message</label>
+      <textarea rows="3" disabled placeholder="Not yet connected"></textarea>
+      <button class="cta-btn ghost" style="margin-top:20px;" disabled>Submit — pending integration</button>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="credo">"I've been sitting down for a long time."</div>
+    <div class="foot-links">
+      <span>Tunnel</span><span>Field</span><span>Sideline</span><span>Locker Room</span><span>Press Box</span><span>Coach's Office</span><span>Front Office</span><span>Team Store</span><span>Jumbotron</span>
+    </div>
+    <div class="legal">THEBRIANWARNER™ — prototype build v2, continued from the September 17 construction point. Placeholder content marked SOURCE NEEDED throughout.</div>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var sections = document.querySelectorAll('main > section');
+    var navButtons = document.querySelectorAll('nav.primary button');
+    var lastSection = 'home';
+
+    function go(target){
+      if(target !== 'booking'){ lastSection = target; }
+      sections.forEach(function(s){ s.classList.toggle('active', s.id === target); });
+      navButtons.forEach(function(b){ b.classList.toggle('active', b.dataset.target === target); });
+      window.scrollTo(0,0);
+    }
+    document.querySelectorAll('[data-target]').forEach(function(b){
+      b.addEventListener('click', function(){ go(b.dataset.target); });
+    });
+
+    document.querySelectorAll('[data-book]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var what = b.dataset.book;
+        document.getElementById('bookingTitle').textContent = 'Request — ' + what;
+        document.getElementById('bookingWhat').value = what;
+        go('booking');
+      });
+    });
+    document.getElementById('bookingBack').addEventListener('click', function(){ go(lastSection); });
+
+    var revealBtn = document.getElementById('revealMore');
+    var moreDoors = document.getElementById('moreDoors');
+    revealBtn.addEventListener('click', function(){
+      var showing = moreDoors.classList.toggle('show');
+      revealBtn.textContent = showing ? 'Show fewer ↑' : 'See the rest of the ecosystem ↓';
+    });
+
+    var invTabs = document.querySelectorAll('#invSubtabs button');
+    var subpanels = document.querySelectorAll('.subpanel');
+    invTabs.forEach(function(t){
+      t.addEventListener('click', function(){
+        invTabs.forEach(function(x){ x.classList.toggle('active', x === t); });
+        subpanels.forEach(function(p){ p.classList.toggle('active', p.id === t.dataset.sub); });
+      });
+    });
+
+    function tick(){
+      var target = new Date('2031-03-08T00:00:00');
+      var now = new Date();
+      var diff = Math.max(0, target - now);
+      var days = Math.floor(diff / 86400000);
+      var hours = Math.floor((diff / 3600000) % 24);
+      var mins = Math.floor((diff / 60000) % 60);
+      var secs = Math.floor((diff / 1000) % 60);
+      var el = document.getElementById('cd-days');
+      if(el){
+        el.textContent = days;
+        document.getElementById('cd-hours').textContent = String(hours).padStart(2,'0');
+        document.getElementById('cd-min').textContent = String(mins).padStart(2,'0');
+        document.getElementById('cd-sec').textContent = String(secs).padStart(2,'0');
+      }
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+</script>
+
+</body>
+</html>
+
+</body></html>

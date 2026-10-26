@@ -1,0 +1,926 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>THEBRIANWARNER.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=IBM+Plex+Mono:wght@500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>/* THEBRIANWARNER — stadium at night.
+   Layout: full-bleed "bands" like sections of a stadium, content held in a single 72rem wrap,
+   gold used once per view for the next play (the call to action). */
+:root {
+  --night: #0b1320;      /* page ground: stadium sky */
+  --field: #111c2d;      /* alternate band */
+  --panel: #172440;      /* raised surfaces: cards, scoreboard */
+  --line: #2b3b58;       /* chalk lines at low light */
+  --chalk: #efebe2;      /* primary text */
+  --mute: #a9b2c3;       /* secondary text */
+  --gold: #dcaa3c;       /* the one accent: championship gold */
+  --gold-hi: #f0c55e;
+  --on-gold: #1b1406;
+  --display: "Big Shoulders Display", "Arial Narrow", "Helvetica Neue", Impact, sans-serif;
+  --body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --wrap: 72rem;
+  --gutter: clamp(1rem, 4vw, 2rem);
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; background: var(--night); }
+body {
+  margin: 0;
+  background: var(--night);
+  color: var(--chalk);
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+img, svg { max-width: 100%; display: block; }
+a { color: var(--gold-hi); text-underline-offset: 3px; }
+a:hover { color: var(--chalk); }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+[hidden] { display: none !important; }
+
+.wrap { width: 100%; max-width: var(--wrap); margin-inline: auto; padding-inline: var(--gutter); }
+.skip { position: absolute; left: -999px; top: 0; background: var(--gold); color: var(--on-gold); padding: .6rem 1rem; z-index: 100; font-family: var(--display); font-weight: 700; }
+.skip:focus { left: 1rem; top: 1rem; }
+
+/* ---------- type scale ---------- */
+h1, h2, h3, h4 { font-family: var(--display); font-weight: 800; line-height: .95; letter-spacing: .005em; text-transform: uppercase; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(3rem, 11vw, 7.5rem); font-weight: 900; }
+h2 { font-size: clamp(2.25rem, 6.5vw, 4.25rem); }
+h3 { font-size: clamp(1.5rem, 3.2vw, 2rem); line-height: 1.02; }
+h4 { font-size: 1.25rem; line-height: 1.1; }
+p { margin: 0; max-width: 65ch; }
+.lead { font-size: clamp(1.15rem, 2.2vw, 1.4rem); line-height: 1.5; color: var(--chalk); }
+.muted { color: var(--mute); }
+.tm { font-size: .45em; vertical-align: super; font-weight: 700; letter-spacing: 0; }
+.eyebrow {
+  font-family: var(--mono); font-size: .78rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--gold); display: flex; gap: .75rem; align-items: center; flex-wrap: wrap;
+}
+.eyebrow b { color: var(--chalk); font-weight: 600; }
+.stack { display: grid; gap: 1.25rem; }
+.stack-lg { display: grid; gap: 2rem; }
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  min-height: 3rem; padding: .7rem 1.4rem; border-radius: 2px;
+  font-family: var(--display); font-weight: 800; font-size: 1.05rem; letter-spacing: .08em; text-transform: uppercase;
+  text-decoration: none; border: 2px solid var(--chalk); color: var(--chalk); background: transparent;
+  transition: background .15s, color .15s, border-color .15s; cursor: pointer;
+}
+.btn:hover { background: var(--chalk); color: var(--night); }
+.btn-gold { background: var(--gold); border-color: var(--gold); color: var(--on-gold); }
+.btn-gold:hover { background: var(--gold-hi); border-color: var(--gold-hi); color: var(--on-gold); }
+.btn-row { display: flex; flex-wrap: wrap; gap: .75rem; }
+.arrow::after { content: "→"; font-family: var(--body); font-weight: 700; }
+
+/* ---------- header / nav ---------- */
+.site-header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  background: rgba(11, 19, 32, .92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 4rem; }
+.brand { font-family: var(--display); font-weight: 900; font-size: 1.45rem; letter-spacing: .02em; color: var(--chalk); text-decoration: none; white-space: nowrap; }
+.brand sup { font-size: .5em; color: var(--gold); }
+.brand:hover { color: var(--gold-hi); }
+.menu-btn {
+  font-family: var(--mono); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase;
+  background: none; color: var(--chalk); border: 1px solid var(--line); padding: .55rem .8rem; border-radius: 2px; cursor: pointer;
+  display: inline-flex; align-items: center; gap: .55rem;
+}
+.menu-btn .burger { width: 16px; height: 10px; border-top: 2px solid currentColor; border-bottom: 2px solid currentColor; position: relative; }
+.menu-btn .burger::after { content: ""; position: absolute; left: 0; right: 0; top: 2px; border-top: 2px solid currentColor; }
+.site-nav { display: none; }
+.site-nav.open {
+  display: grid; gap: 1.25rem; position: absolute; left: 0; right: 0; top: 100%;
+  background: var(--night); border-bottom: 1px solid var(--line); padding: 1.25rem var(--gutter) 1.75rem;
+  max-height: calc(100vh - 4rem); overflow-y: auto;
+}
+.site-nav ul { list-style: none; margin: 0; padding: 0; display: grid; }
+.site-nav li a {
+  display: block; padding: .7rem 0; border-bottom: 1px solid var(--line);
+  font-family: var(--display); font-weight: 800; font-size: 1.6rem; text-transform: uppercase; letter-spacing: .02em;
+  color: var(--chalk); text-decoration: none;
+}
+.site-nav li a:hover, .site-nav li a[aria-current="page"] { color: var(--gold); }
+.no-js .site-nav { display: block; }
+@media (min-width: 1100px) {
+  .menu-btn { display: none; }
+  .site-nav, .site-nav.open { display: flex; align-items: center; gap: 1.5rem; position: static; padding: 0; border: 0; background: none; max-height: none; overflow: visible; }
+  .site-nav ul { display: flex; gap: 1.35rem; }
+  .site-nav li.menu-only { display: none; }
+  .site-nav li a { font-size: 1rem; padding: .25rem 0; border: 0; letter-spacing: .08em; border-bottom: 2px solid transparent; }
+  .site-nav li a[aria-current="page"] { border-bottom-color: var(--gold); color: var(--chalk); }
+  .site-nav .btn { min-height: 2.5rem; padding: .45rem 1rem; font-size: .92rem; }
+}
+
+/* ---------- bands ---------- */
+.band { padding-block: clamp(3.5rem, 9vw, 6.5rem); border-top: 1px solid var(--line); }
+.band-field { background: var(--field); }
+.band-head { display: grid; gap: 1rem; margin-bottom: clamp(2rem, 5vw, 3rem); }
+.split { display: grid; gap: 2.5rem; }
+.split > * { min-width: 0; }
+@media (min-width: 900px) { .split { grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; } .split-wide { grid-template-columns: 1.2fr .8fr; } }
+
+/* ---------- hero: stadium under lights ---------- */
+.hero {
+  position: relative; overflow: hidden;
+  padding-block: clamp(3.5rem, 10vw, 7rem) clamp(2.5rem, 6vw, 4rem);
+  background:
+    radial-gradient(60rem 28rem at 85% -10%, rgba(240, 197, 94, .20), transparent 60%),
+    radial-gradient(40rem 22rem at 5% -20%, rgba(239, 235, 226, .10), transparent 60%),
+    var(--night);
+}
+.hero::before { /* yard lines */
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(90deg, transparent 0 calc(10% - 1px), rgba(239, 235, 226, .045) calc(10% - 1px) 10%);
+  mask-image: linear-gradient(to bottom, transparent, #000 35%, #000 70%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 35%, #000 70%, transparent);
+}
+.hero > .wrap { position: relative; display: grid; gap: 1.75rem; }
+.hero h1 .gold { color: var(--gold); display: block; }
+.hero-page h1 { font-size: clamp(2.75rem, 9vw, 6rem); }
+@media (prefers-reduced-motion: no-preference) {
+  .hero { animation: lights 1.4s ease-out both; }
+  @keyframes lights { from { background-color: #05080e; } to { background-color: var(--night); } }
+  .hero h1 { animation: rise .8s .15s ease-out both; }
+  @keyframes rise { from { transform: translateY(14px); opacity: .01; } to { transform: none; opacity: 1; } }
+}
+
+/* scoreboard: the next first down */
+.scoreboard {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1px solid var(--line); background: var(--panel);
+  font-family: var(--mono); max-width: 44rem; margin-top: .5rem;
+}
+.scoreboard > div { padding: .8rem 1rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.scoreboard > div:nth-child(2n) { border-right: 0; }
+.scoreboard > div:nth-last-child(-n+2) { border-bottom: 0; }
+.scoreboard dt { font-size: .68rem; letter-spacing: .16em; color: var(--mute); text-transform: uppercase; }
+.scoreboard dd { margin: .15rem 0 0; font-family: var(--display); font-weight: 900; font-size: 1.9rem; line-height: 1; color: var(--gold-hi); font-variant-numeric: tabular-nums; }
+.scoreboard dd small { font-size: .55em; color: var(--chalk); letter-spacing: .06em; }
+@media (min-width: 640px) {
+  .scoreboard { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .scoreboard > div { border-bottom: 0; }
+  .scoreboard > div:nth-child(2n) { border-right: 1px solid var(--line); }
+  .scoreboard > div:last-child { border-right: 0; }
+}
+.scoreboard-cap { font-family: var(--mono); font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
+
+/* credential ticker */
+.credits { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; font-family: var(--mono); font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--mute); padding: 0; margin: 0; list-style: none; }
+.credits li::before { content: "▸ "; color: var(--gold); }
+
+/* ---------- grids & tiles ---------- */
+.grid { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.grid > * { background: var(--night); min-width: 0; }
+.band-field .grid > * { background: var(--field); }
+@media (min-width: 640px) { .grid-2, .grid-3, .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 980px) { .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.tile { padding: clamp(1.25rem, 3vw, 1.75rem); display: grid; gap: .75rem; align-content: start; }
+.tile .tag { font-family: var(--mono); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+.tile p { color: var(--mute); font-size: 1rem; }
+a.tile { color: inherit; text-decoration: none; transition: background .15s; }
+a.tile:hover { background: var(--panel); }
+a.tile:hover h3, a.tile:hover h4 { color: var(--gold-hi); }
+.tile .go { font-family: var(--display); font-weight: 800; letter-spacing: .08em; text-transform: uppercase; font-size: .95rem; color: var(--chalk); margin-top: .25rem; }
+.tile .go::after { content: " →"; color: var(--gold); }
+
+/* the stadium map (seven rooms) */
+.rooms { counter-reset: none; }
+.room .where { font-family: var(--mono); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+
+/* ---------- the conversation: question list ---------- */
+.questions { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.questions li {
+  display: grid; grid-template-columns: 3.25rem 1fr; gap: 1rem; align-items: baseline;
+  padding: 1rem 0; border-bottom: 1px solid var(--line);
+  font-family: var(--display); font-weight: 700; font-size: clamp(1.35rem, 3.4vw, 1.9rem); line-height: 1.1; text-transform: uppercase;
+}
+.questions li span { font-family: var(--mono); font-size: .75rem; font-weight: 500; letter-spacing: .12em; color: var(--gold); }
+.pullquote {
+  border-left: 4px solid var(--gold); padding: .25rem 0 .25rem 1.25rem; margin: 0;
+  font-family: var(--body); font-style: italic; font-size: clamp(1.35rem, 3vw, 1.8rem); line-height: 1.35; max-width: 32ch;
+}
+.pullquote cite { display: block; margin-top: .75rem; font-style: normal; font-family: var(--mono); font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+.guarantee {
+  display: grid; gap: .5rem; padding: 1.25rem 1.4rem; border: 1px dashed var(--gold); background: rgba(220, 170, 60, .06);
+}
+.guarantee strong { font-family: var(--display); font-weight: 800; font-size: 1.35rem; text-transform: uppercase; letter-spacing: .03em; color: var(--gold-hi); }
+.notlist { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+.notlist li { font-family: var(--mono); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; border: 1px solid var(--line); padding: .35rem .6rem; color: var(--mute); text-decoration: line-through; text-decoration-color: var(--gold); }
+
+/* ---------- shows ---------- */
+.show { padding: clamp(1.25rem, 3vw, 1.75rem); display: grid; gap: .8rem; align-content: start; }
+.show .room-name { font-family: var(--mono); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+.show p { color: var(--mute); font-size: 1rem; }
+.show .flag { font-family: var(--mono); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--night); background: var(--gold); padding: .2rem .5rem; justify-self: start; }
+.chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+.chip {
+  font-family: var(--mono); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase;
+  border: 1px solid var(--line); padding: .45rem .7rem; color: var(--chalk); text-decoration: none; border-radius: 2px;
+}
+a.chip:hover { border-color: var(--gold); color: var(--gold-hi); }
+.chip.soon { color: var(--mute); border-style: dashed; }
+
+/* ---------- store ---------- */
+.products { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); }
+.product { display: grid; gap: .9rem; align-content: start; }
+.product .tee {
+  aspect-ratio: 1 / 1; max-width: 100%; background: var(--panel); border: 1px solid var(--line);
+  display: grid; place-items: center; position: relative; overflow: hidden;
+}
+.product .tee svg { width: 82%; height: auto; }
+.product .tee .print {
+  position: absolute; inset: 0; display: grid; place-items: center; padding: 0 26%;
+  font-family: var(--display); font-weight: 900; text-transform: uppercase; text-align: center; line-height: .9;
+  color: var(--gold); font-size: clamp(1.1rem, 4.2vw, 1.6rem); letter-spacing: .02em; padding-top: 6%;
+}
+.product .tee .print.long { font-size: clamp(.95rem, 3.4vw, 1.25rem); }
+.product h3 { font-size: 1.6rem; }
+.product .meta { font-family: var(--mono); font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
+.product p { font-size: 1rem; color: var(--mute); }
+.product .btn { justify-self: start; min-height: 2.6rem; font-size: .95rem; padding: .5rem 1rem; }
+
+/* ---------- stand up sequence (About) ---------- */
+.standup { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--line); }
+.standup li { padding: .85rem 0; border-bottom: 1px solid var(--line); font-family: var(--display); font-weight: 700; font-size: clamp(1.3rem, 3.2vw, 1.8rem); text-transform: uppercase; line-height: 1.1; display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; }
+.standup li::after { content: "STANDING"; font-family: var(--mono); font-size: .68rem; font-weight: 500; letter-spacing: .16em; color: var(--gold); flex: none; }
+.standup-close { font-family: var(--body); font-style: italic; font-size: clamp(1.4rem, 3.4vw, 2rem); line-height: 1.3; }
+
+.record { display: grid; gap: 0; border-top: 1px solid var(--line); margin: 0; }
+.record div { display: grid; grid-template-columns: minmax(7rem, 11rem) 1fr; gap: 1rem; padding: .9rem 0; border-bottom: 1px solid var(--line); }
+.record dt { font-family: var(--mono); font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); padding-top: .3rem; }
+.record dd { margin: 0; min-width: 0; }
+@media (max-width: 520px) { .record div { grid-template-columns: 1fr; gap: .25rem; } }
+
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.steps li { background: var(--night); padding: 1.25rem 1.4rem; display: grid; grid-template-columns: 4.5rem 1fr; gap: 1rem; }
+.band-field .steps li { background: var(--field); }
+.steps .down { font-family: var(--display); font-weight: 900; font-size: 1.6rem; color: var(--gold); line-height: 1; }
+.steps h4 { margin-bottom: .35rem; }
+.steps p { color: var(--mute); font-size: 1rem; }
+
+/* ---------- CTA band ---------- */
+.cta-band { background: var(--gold); color: var(--on-gold); padding-block: clamp(3rem, 8vw, 5rem); }
+.cta-band .wrap { display: grid; gap: 1.5rem; }
+.cta-band h2 { color: var(--on-gold); }
+.cta-band p { color: var(--on-gold); }
+.cta-band .btn { border-color: var(--on-gold); color: var(--on-gold); }
+.cta-band .btn:hover { background: var(--on-gold); color: var(--gold-hi); }
+.cta-band .btn-dark { background: var(--on-gold); color: var(--gold-hi); }
+.cta-band .btn-dark:hover { background: var(--night); border-color: var(--night); }
+
+/* ---------- forms ---------- */
+.form { display: grid; gap: 1.1rem; max-width: 40rem; }
+.field { display: grid; gap: .4rem; }
+.field label { font-family: var(--mono); font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
+.field input, .field select, .field textarea {
+  width: 100%; font: inherit; font-size: 1rem; color: var(--chalk); background: var(--panel);
+  border: 1px solid var(--line); border-radius: 2px; padding: .8rem .9rem; min-height: 3rem;
+}
+.field textarea { min-height: 9rem; resize: vertical; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--gold); outline-offset: 1px; border-color: var(--gold); }
+.form-note { font-family: var(--mono); font-size: .8rem; color: var(--mute); }
+.form-status { padding: .9rem 1rem; border: 1px solid var(--gold); color: var(--chalk); background: rgba(220, 170, 60, .08); }
+
+/* ---------- footer ---------- */
+.site-footer { border-top: 1px solid var(--line); background: #070d17; padding-block: 3.5rem 2.5rem; }
+.site-footer .cols { display: grid; gap: 2rem; }
+@media (min-width: 760px) { .site-footer .cols { grid-template-columns: 1.4fr 1fr 1fr; } }
+.site-footer h4 { font-size: .8rem; font-family: var(--mono); font-weight: 500; letter-spacing: .14em; color: var(--gold); margin-bottom: .8rem; }
+.site-footer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: .45rem; }
+.site-footer a { color: var(--chalk); text-decoration: none; }
+.site-footer a:hover { color: var(--gold-hi); }
+.site-footer .fine { margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line); font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; color: var(--mute); display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; justify-content: space-between; }
+.foot-brand { font-family: var(--display); font-weight: 900; font-size: 2rem; line-height: 1; }
+.foot-brand sup { font-size: .45em; color: var(--gold); }
+
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+</style>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="#home" aria-label="THEBRIANWARNER home">THEBRIANWARNER<sup>™</sup></a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav"><span class="burger" aria-hidden="true"></span><span class="label">Menu</span></button>
+    <nav id="site-nav" class="site-nav" aria-label="Main">
+      <ul><li><a href="#story">Story</a></li><li class="menu-only"><a href="#championship-conversation">Championship Conversation</a></li><li><a href="#media">Media</a></li><li><a href="#coaching">Coaching</a></li><li><a href="#saturday-school">Saturday School</a></li><li><a href="#investigator-training">Investigator Training</a></li><li><a href="#team-store">Team Store</a></li><li><a href="#connect">Connect</a></li></ul>
+      <a class="btn btn-gold" href="#championship-conversation">Championship Conversation</a>
+    </nav>
+  </div>
+</header>
+<main class="pv-page" data-page="home" data-title="THEBRIANWARNER™ | An Operating System for Pressure">
+<section class="hero"><div class="wrap">
+  <p class="eyebrow"><b>THEBRIANWARNER™</b> · Welcome to the stadium</p>
+  <h1>Pressure is the game.<span class="gold">Get coached up.</span></h1>
+  <p class="lead">Brian Warner teaches regular Joe and regular Jane to build an operating system for pressure. Not a pep talk. A standard, taught by proximity, through championship conversation.</p>
+  <div class="btn-row">
+    <a class="btn btn-gold arrow" href="#connect">Have a Championship Conversation</a>
+    <a class="btn" href="#media">Watch &amp; Listen</a>
+  </div>
+  <dl class="scoreboard" aria-label="Field position">
+    <div><dt>Down</dt><dd>1<small>ST</small></dd></div>
+    <div><dt>To go</dt><dd>10</dd></div>
+    <div><dt>Ball on</dt><dd>OWN 20</dd></div>
+    <div><dt>Objective</dt><dd>Next <small>first down</small></dd></div>
+  </dl>
+  <p class="scoreboard-cap">Not the touchdown. The next first down. Movement creates momentum. Momentum changes seasons.</p>
+</div></section>
+
+<section class="band"><div class="wrap split split-wide">
+  <div class="stack">
+    <p class="eyebrow"><b>WHO</b> · Brian Warner</p>
+    <h2>Every room trained the same muscle.</h2>
+    <p class="lead">Division I football. Federal law enforcement. Criminal defense investigation. The weight room, the classroom, the courtroom, the sideline. Different jerseys, same test: perform when it counts.</p>
+    <p class="muted">Most people have done one thing. Brian has operated under pressure in all of these rooms, and he's built the lessons into a system anyone can run.</p>
+    <div class="btn-row"><a class="btn arrow" href="#story">Read the story</a></div>
+  </div>
+  <ul class="credits" aria-label="Credentials">
+    <li>Division I athlete · Oregon State, Portland State</li>
+    <li>Team Captain · Offensive MVP</li>
+    <li>Former Deputy U.S. Marshal</li>
+    <li>Federal criminal defense investigator</li>
+    <li>Personal trainer</li>
+    <li>High school football coach</li>
+    <li>Author · Operation: I Am a Champion™</li>
+    <li>Speaker</li>
+  </ul>
+</div></section>
+
+<section class="band band-field"><div class="wrap">
+  <div class="band-head">
+    <p class="eyebrow"><b>WHAT</b> · THEBRIANWARNER™</p>
+    <h2>A standard and a stamp.</h2>
+    <p class="lead">THEBRIANWARNER™ is more than a name. It's the standard for how you enter a room, operate under pressure, and leave it better. The whole ecosystem is laid out like a stadium. Pick your door.</p>
+  </div>
+  <div class="grid grid-4 rooms">
+    <a class="tile room" href="#media"><span class="where">Inside the Booth</span><h4>Podcasts</h4><p>All five shows. The same investigation told from different vantage points.</p><span class="go">Listen</span></a>
+    <a class="tile room" href="#coaching"><span class="where">Coach's Office</span><h4>Doctrine &amp; playbooks</h4><p>Operation: I Am a Champion™, the Championship Performance System™, books and frameworks.</p><span class="go">Enter</span></a>
+    <a class="tile room" href="#media"><span class="where">Film Room</span><h4>Case studies</h4><p>Episode breakdowns and behavior analysis. Every conversation is evidence.</p><span class="go">Watch</span></a>
+    <a class="tile room" href="#coaching"><span class="where">The Field</span><h4>Execution</h4><p>Walk Talks, the Championship Daily Planner, behavior tracking. Where the work gets done.</p><span class="go">Train</span></a>
+    <a class="tile room" href="#media"><span class="where">Press Box</span><h4>Analysis</h4><p>Articles, sports commentary, investigations. High-level thinking from above the field.</p><span class="go">Read</span></a>
+    <a class="tile room" href="#saturday-school"><span class="where">Field Pass</span><h4>Premium access</h4><p>Saturday School, courses, coaching, Mini Camp, workbooks and exclusive episodes.</p><span class="go">Get access</span></a>
+    <a class="tile room" href="#team-store"><span class="where">Team Store</span><h4>Wear the standard</h4><p>ACQUITTED, BIG 45, FIRST IN / FIRST OUT, FREE DEM BOYS, GET COACHED UP.</p><span class="go">Shop</span></a>
+    <a class="tile room" href="#connect"><span class="where">Player's Lounge</span><h4>Community</h4><p>Stories, identity and the people running the system with you.</p><span class="go">Connect</span></a>
+  </div>
+</div></section>
+
+<section class="band"><div class="wrap split">
+  <div class="stack">
+    <p class="eyebrow"><b>THE OFFER</b> · Championship Conversation™</p>
+    <h2>One conversation. Real movement.</h2>
+    <p class="lead">A structured conversation about performance. We don't try to solve your whole life. We create movement, because movement creates momentum.</p>
+    <blockquote class="pullquote">What do you need to put down. And what do you need to pick back up.<cite>The Championship Conversation</cite></blockquote>
+    <div class="guarantee"><strong>Money-back guarantee</strong><span class="muted">If the conversation doesn't create movement, you get your money back.</span></div>
+    <div class="btn-row"><a class="btn btn-gold arrow" href="#connect">Have the conversation</a><a class="btn" href="#championship-conversation">How it works</a></div>
+  </div>
+  <ol class="questions"><li><span>Q01</span>Who are you right now?</li><li><span>Q02</span>Where are you playing from?</li><li><span>Q03</span>What&#x27;s putting pressure on you?</li><li><span>Q04</span>What scoreboard are you using?</li><li><span>Q05</span>What penalties keep showing up?</li><li><span>Q06</span>What is your next first down?</li></ol>
+</div></section>
+
+<section class="band band-field"><div class="wrap">
+  <div class="band-head">
+    <p class="eyebrow"><b>WHERE</b> · Watch &amp; listen</p>
+    <h2>The investigation is underway.</h2>
+    <p class="lead">Five shows live Inside the Booth. Start with the flagship.</p>
+    <div class="chips"><span class="chip soon">YouTube · soon</span><span class="chip soon">Spotify · soon</span><span class="chip soon">Apple Podcasts · soon</span><span class="chip soon">Instagram · soon</span></div>
+  </div>
+  <div class="grid grid-3"><article class="show"><span class="flag">Flagship</span><span class="room-name">The Courtroom</span><h3>BDUB v. BDUB</h3><p>The main trial. Testimony from Brian&#x27;s life, the doctrine each moment reveals, and his current behavior, all under investigation at the same time. The verdict question: Are you a champion?</p></article><article class="show"><span class="room-name">The Evidence Room</span><h3>Defense Investigator Warner</h3><p>The investigative deep dive. How the work gets done in the field: discovery, case assignments, courtrooms, and slowing things down when the stakes step up.</p></article><article class="show"><span class="room-name">The Lineage Room</span><h3>Marshal 46</h3><p>Federal law enforcement lineage. Where the operational standard came from, and how it still runs every room Brian walks into.</p></article><article class="show"><span class="room-name">Inside the Booth</span><h3>Million Dollar Opportunity</h3><p>Episodes and show details coming to this page.</p></article><article class="show"><span class="room-name">Inside the Booth</span><h3>Sixty Seconds Go</h3><p>Episodes and show details coming to this page.</p></article></div>
+  <div class="btn-row" style="margin-top:1.75rem"><a class="btn arrow" href="#media">All media</a></div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <div class="band-head">
+    <p class="eyebrow"><b>HOW</b> · Work with Brian</p>
+    <h2>Pick your field position.</h2>
+  </div>
+  <div class="grid grid-3">
+    <a class="tile" href="#championship-conversation"><span class="tag">One-on-one · Front door</span><h3>Championship Conversation</h3><p>The first yes. A structured conversation about the pressure you're under and your next first down.</p><span class="go">Start here</span></a>
+    <a class="tile" href="#coaching"><span class="tag">Ongoing</span><h3>Coaching &amp; Mentoring</h3><p>Field Pass membership, coaching and Mini Camp for people who want to keep moving the chains.</p><span class="go">Get coached up</span></a>
+    <a class="tile" href="#saturday-school"><span class="tag">Group · Zoom</span><h3>Saturday School</h3><p>The Championship Conversation in a large-format workshop. Bring your pressure. Leave with a play.</p><span class="go">Enroll</span></a>
+    <a class="tile" href="#investigator-training"><span class="tag">Professional</span><h3>Investigator Training</h3><p>Field-tested investigative process from a federal criminal defense investigator and former Deputy U.S. Marshal.</p><span class="go">Train</span></a>
+    <a class="tile" href="#coaching"><span class="tag">Organizations</span><h3>CPS Licensing</h3><p>Bring the Championship Performance System™ into your team, school, program or company.</p><span class="go">Bring it in</span></a>
+    <a class="tile" href="#connect"><span class="tag">Stage</span><h3>Speaking &amp; Keynotes</h3><p>Brian's story delivered as story, not resume. Book him for your event.</p><span class="go">Book Brian</span></a>
+  </div>
+</div></section>
+
+<section class="band band-field"><div class="wrap">
+  <div class="band-head">
+    <p class="eyebrow"><b>TEAM STORE</b> · Wear the standard</p>
+    <h2>Every shirt carries doctrine.</h2>
+  </div>
+  <div class="products"><article class="product" id="acquitted">
+  <div class="tee"><svg viewBox="0 0 200 200" aria-hidden="true"><path fill="#22324f" stroke="#2b3b58" stroke-width="2" d="M70 22 L50 28 L14 52 L30 86 L50 76 L50 182 L150 182 L150 76 L170 86 L186 52 L150 28 L130 22 C124 36 112 42 100 42 C88 42 76 36 70 22 Z"/></svg><span class="print">ACQUITTED</span></div>
+  <span class="meta">Team Store</span>
+  <h3>ACQUITTED</h3>
+  <a class="btn" href="#connect">Request yours</a>
+</article><article class="product" id="big-45">
+  <div class="tee"><svg viewBox="0 0 200 200" aria-hidden="true"><path fill="#22324f" stroke="#2b3b58" stroke-width="2" d="M70 22 L50 28 L14 52 L30 86 L50 76 L50 182 L150 182 L150 76 L170 86 L186 52 L150 28 L130 22 C124 36 112 42 100 42 C88 42 76 36 70 22 Z"/></svg><span class="print">BIG 45</span></div>
+  <span class="meta">Team Store</span>
+  <h3>BIG 45</h3>
+  <a class="btn" href="#connect">Request yours</a>
+</article><article class="product" id="first-in-first-out">
+  <div class="tee"><svg viewBox="0 0 200 200" aria-hidden="true"><path fill="#22324f" stroke="#2b3b58" stroke-width="2" d="M70 22 L50 28 L14 52 L30 86 L50 76 L50 182 L150 182 L150 76 L170 86 L186 52 L150 28 L130 22 C124 36 112 42 100 42 C88 42 76 36 70 22 Z"/></svg><span class="print long">FIRST IN / FIRST OUT</span></div>
+  <span class="meta">Team Store</span>
+  <h3>FIRST IN / FIRST OUT</h3>
+  <a class="btn" href="#connect">Request yours</a>
+</article><article class="product" id="free-dem-boys">
+  <div class="tee"><svg viewBox="0 0 200 200" aria-hidden="true"><path fill="#22324f" stroke="#2b3b58" stroke-width="2" d="M70 22 L50 28 L14 52 L30 86 L50 76 L50 182 L150 182 L150 76 L170 86 L186 52 L150 28 L130 22 C124 36 112 42 100 42 C88 42 76 36 70 22 Z"/></svg><span class="print long">FREE DEM BOYS</span></div>
+  <span class="meta">Team Store</span>
+  <h3>FREE DEM BOYS</h3>
+  <a class="btn" href="#connect">Request yours</a>
+</article><article class="product" id="get-coached-up">
+  <div class="tee"><svg viewBox="0 0 200 200" aria-hidden="true"><path fill="#22324f" stroke="#2b3b58" stroke-width="2" d="M70 22 L50 28 L14 52 L30 86 L50 76 L50 182 L150 182 L150 76 L170 86 L186 52 L150 28 L130 22 C124 36 112 42 100 42 C88 42 76 36 70 22 Z"/></svg><span class="print long">GET COACHED UP</span></div>
+  <span class="meta">Team Store</span>
+  <h3>GET COACHED UP</h3>
+  <a class="btn" href="#connect">Request yours</a>
+</article></div>
+  <div class="btn-row" style="margin-top:1.75rem"><a class="btn btn-gold arrow" href="#team-store">Enter the Team Store</a></div>
+</div></section>
+
+<section class="cta-band"><div class="wrap">
+  <h2>Your next first down starts with one conversation.</h2>
+  <p class="lead">Lead with the pressure you're under right now. We'll find the next play.</p>
+  <div class="btn-row"><a class="btn btn-dark arrow" href="#connect">Have a Championship Conversation</a><a class="btn" href="#connect">Connect</a></div>
+</div></section>
+</main><main class="pv-page" data-page="story" data-title="Story | THEBRIANWARNER™" hidden>
+<section class="hero hero-page"><div class="wrap">
+  <p class="eyebrow"><b>STORY</b> · Brian Warner</p>
+  <h1>Stand up if you've been there.</h1>
+  <p class="lead">The credential only makes sense as a story. So here's how Brian opens a room.</p>
+  
+</div></section>
+
+<section class="band"><div class="wrap split">
+  <div class="stack">
+    <p class="eyebrow"><b>THE STAND UP SEQUENCE</b></p>
+    <p class="lead">Stand up if you've…</p>
+    <ul class="standup">
+      <li>Gone to school out of state</li>
+      <li>Got a bachelor's degree</li>
+      <li>Been a deputy marshal</li>
+      <li>Been a personal trainer</li>
+      <li>Started a business</li>
+      <li>Played at a different school</li>
+      <li>Had a newspaper article</li>
+      <li>Played international</li>
+      <li>Lived international</li>
+    </ul>
+    <p class="standup-close">“I've been sitting down for a long time.”</p>
+  </div>
+  <div class="stack">
+    <p class="eyebrow"><b>THE RECORD</b></p>
+    <dl class="record">
+      <div><dt>Field</dt><dd>Division I football at Oregon State and Portland State. Team Captain. Offensive MVP.</dd></div>
+      <div><dt>Federal</dt><dd>Former Deputy U.S. Marshal. The operational standard: how you arrive, how you depart, how you run the room.</dd></div>
+      <div><dt>Defense</dt><dd>Federal criminal defense investigator. Discovery, case work, courtrooms, contested hearings. Slowing things down when the stakes step up.</dd></div>
+      <div><dt>Training</dt><dd>Personal trainer. The body under load, and the decisions made there.</dd></div>
+      <div><dt>Sideline</dt><dd>High school football coach. Film review, the transfer portal era, and kids who needed coaching more than hype.</dd></div>
+      <div><dt>Author</dt><dd>Operation: I Am a Champion™ and the Championship Workbook.</dd></div>
+    </dl>
+  </div>
+</div></section>
+
+<section class="band band-field"><div class="wrap split">
+  <div class="stack">
+    <p class="eyebrow"><b>THE STAMP</b></p>
+    <h2>THEBRIANWARNER™ is a standard.</h2>
+  </div>
+  <div class="stack">
+    <p class="lead">All caps. No spaces. Trademark attached. It started as a description of a certain kind of athlete, and it became a standard for how to operate.</p>
+    <p class="muted">Football locker rooms, film rooms, huddles, weight rooms, federal law enforcement, defense investigations, courtrooms, interview rooms, leadership meetings, family conversations and personal adversity. Each room added its own vocabulary, decision rules and performance standards. Phrases like “step up into the pocket,” “ball security” and “move the chains” aren't decoration. They're field-tested operating language.</p>
+    <p class="muted">The mission: teach regular Joe and regular Jane to develop an operating system for pressure, taught by proximity through championship conversation.</p>
+  </div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <div class="band-head"><p class="eyebrow"><b>HOW BRIAN OPERATES</b></p><h2>Doctrine from the record.</h2></div>
+  <div class="grid grid-3">
+    <div class="tile"><span class="tag">Methodology</span><h3>Move the chains</h3><p>Not the touchdown. The next first down.</p></div>
+    <div class="tile"><span class="tag">Core doctrine</span><h3>Let the game come to you</h3><p>Slow it down. Read the field position, the down and distance, and the time left before you call the play.</p></div>
+    <div class="tile"><span class="tag">Operational lineage</span><h3>Championship departure on arrivals</h3><p>The standard for how you enter and exit every room, carried from federal operations.</p></div>
+    <div class="tile"><span class="tag">Decision space</span><h3>Walk Talk / Drive Talk</h3><p>The internal championship conversation. Time and space that allow a better decision.</p></div>
+    <div class="tile"><span class="tag">Accountability</span><h3>You chase. You waste. Can you make the case?</h3><p>After the chase, can you prove you did all the work? That answer decides whether it was a waste.</p></div>
+    <div class="tile"><span class="tag">Close</span><h3>Roger that</h3><p>The confirmed close of the Championship Communication Loop.</p></div>
+  </div>
+</div></section>
+
+<section class="cta-band"><div class="wrap">
+  <h2>The case continues.</h2>
+  <p class="lead">Bring your own evidence. Let's see what play you run next.</p>
+  <div class="btn-row"><a class="btn btn-dark arrow" href="#connect">Have a Championship Conversation</a><a class="btn" href="#connect">Connect</a></div>
+</div></section>
+</main><main class="pv-page" data-page="championship-conversation" data-title="Championship Conversation™ | THEBRIANWARNER™" hidden>
+<section class="hero hero-page"><div class="wrap">
+  <p class="eyebrow"><b>THE FRONT DOOR</b> · Championship Conversation™</p>
+  <h1>One conversation.<br>Real movement.</h1>
+  <p class="lead">A structured conversation about performance. The objective is to create movement, not to solve your whole life. Movement creates momentum. Momentum changes seasons.</p>
+  <div class="btn-row"><a class="btn btn-gold arrow" href="#connect">Have the conversation</a></div>
+</div></section>
+
+<section class="band"><div class="wrap split">
+  <div class="stack">
+    <p class="eyebrow"><b>WHAT IT IS</b></p>
+    <h2>Lead with the pressure.</h2>
+    <p class="lead">You don't have to explain your job title. Bring the pressure you're under right now. We work from there.</p>
+    <p class="muted">It isn't:</p>
+    <ul class="notlist"><li>Therapy</li><li>Consulting</li><li>Motivational speaking</li><li>Traditional life coaching</li></ul>
+    <blockquote class="pullquote">What do you need to put down. And what do you need to pick back up.<cite>The two questions underneath all of it</cite></blockquote>
+  </div>
+  <div class="stack">
+    <p class="eyebrow"><b>THE QUESTIONS</b></p>
+    <ol class="questions"><li><span>Q01</span>Who are you right now?</li><li><span>Q02</span>Where are you playing from?</li><li><span>Q03</span>What&#x27;s putting pressure on you?</li><li><span>Q04</span>What scoreboard are you using?</li><li><span>Q05</span>What penalties keep showing up?</li><li><span>Q06</span>What is your next first down?</li></ol>
+  </div>
+</div></section>
+
+<section class="band band-field"><div class="wrap">
+  <div class="band-head"><p class="eyebrow"><b>HOW IT RUNS</b></p><h2>Four downs.</h2></div>
+  <ol class="steps">
+    <li><span class="down">1ST</span><div><h4>Accept the invitation</h4><p>Pick a time. This is an offer, not a sales pitch.</p></div></li>
+    <li><span class="down">2ND</span><div><h4>Get your field position</h4><p>Who you are right now, where you're playing from, and what scoreboard you've been using.</p></div></li>
+    <li><span class="down">3RD</span><div><h4>Review the film</h4><p>The pressure on you and the penalties that keep showing up. Named plainly.</p></div></li>
+    <li><span class="down">4TH</span><div><h4>Call the next play</h4><p>You leave with your next first down. Roger that.</p></div></li>
+  </ol>
+</div></section>
+
+<section class="band"><div class="wrap split">
+  <div class="stack">
+    <p class="eyebrow"><b>THE GUARANTEE</b></p>
+    <h2>No movement, no charge.</h2>
+  </div>
+  <div class="stack">
+    <div class="guarantee"><strong>Money-back guarantee</strong><span>If the conversation doesn't create movement, you get your money back.</span></div>
+    <p class="muted">How you know it worked: you start watching the clock for the next one.</p>
+    <p class="muted">Want to go further after the first conversation? Continue with <a href="#coaching">coaching</a>, join <a href="#saturday-school">Saturday School</a>, or bring the system to your <a href="#coaching">organization</a>.</p>
+  </div>
+</div></section>
+
+<section class="cta-band"><div class="wrap">
+  <h2>Ready for the first yes?</h2>
+  <p class="lead">One conversation. Your next first down.</p>
+  <div class="btn-row"><a class="btn btn-dark arrow" href="#connect">Book the conversation</a><a class="btn" href="#connect">Connect</a></div>
+</div></section>
+</main><main class="pv-page" data-page="media" data-title="Media &amp; Podcasts | THEBRIANWARNER™" hidden>
+<section class="hero hero-page"><div class="wrap">
+  <p class="eyebrow"><b>INSIDE THE BOOTH</b> · Media / Podcast</p>
+  <h1>Every conversation is evidence.</h1>
+  <p class="lead">Five shows. One continuous lineage of championship conversations. Documentary, not highlight reel.</p>
+  <div class="chips"><span class="chip soon">YouTube · soon</span><span class="chip soon">Spotify · soon</span><span class="chip soon">Apple Podcasts · soon</span><span class="chip soon">Instagram · soon</span></div>
+</div></section>
+
+<section class="band"><div class="wrap split split-wide">
+  <div class="stack">
+    <p class="eyebrow"><b>THE FLAGSHIP</b> · The Courtroom</p>
+    <h2>BDUB v. BDUB</h2>
+    <p class="lead">A true story told in broadcast order, in grounded BDUB language. Three tracks run at the same time.</p>
+    <dl class="record">
+      <div><dt>Testimony</dt><dd>The factual moment. Specific, and placed in time.</dd></div>
+      <div><dt>Doctrine</dt><dd>What the moment reveals through the Championship Performance System™.</dd></div>
+      <div><dt>Current behavior</dt><dd>Brian stays under investigation during the trial, reverse engineering in real time.</dd></div>
+    </dl>
+  </div>
+  <div class="stack">
+    <blockquote class="pullquote">Are you a champion? Come along for the ride. Let's see what play he runs next.<cite>The verdict question</cite></blockquote>
+    <p class="muted">Defense Investigator Warner and Marshal 46 are perspectives drawn from inside BDUB v. BDUB. Same investigation, different vantage points.</p>
+  </div>
+</div></section>
+
+<section class="band band-field"><div class="wrap">
+  <div class="band-head"><p class="eyebrow"><b>ALL SHOWS</b></p><h2>The lineup.</h2></div>
+  <div class="grid grid-3"><article class="show"><span class="flag">Flagship</span><span class="room-name">The Courtroom</span><h3>BDUB v. BDUB</h3><p>The main trial. Testimony from Brian&#x27;s life, the doctrine each moment reveals, and his current behavior, all under investigation at the same time. The verdict question: Are you a champion?</p></article><article class="show"><span class="room-name">The Evidence Room</span><h3>Defense Investigator Warner</h3><p>The investigative deep dive. How the work gets done in the field: discovery, case assignments, courtrooms, and slowing things down when the stakes step up.</p></article><article class="show"><span class="room-name">The Lineage Room</span><h3>Marshal 46</h3><p>Federal law enforcement lineage. Where the operational standard came from, and how it still runs every room Brian walks into.</p></article><article class="show"><span class="room-name">Inside the Booth</span><h3>Million Dollar Opportunity</h3><p>Episodes and show details coming to this page.</p></article><article class="show"><span class="room-name">Inside the Booth</span><h3>Sixty Seconds Go</h3><p>Episodes and show details coming to this page.</p></article></div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <div class="band-head"><p class="eyebrow"><b>MORE ROOMS</b></p><h2>Film Room &amp; Press Box.</h2></div>
+  <div class="grid grid-2">
+    <div class="tile"><span class="tag">Film Room</span><h3>Case studies &amp; breakdowns</h3><p>Episode breakdowns and behavior analysis. Coming to this page as episodes publish.</p></div>
+    <div class="tile"><span class="tag">Press Box</span><h3>Articles &amp; commentary</h3><p>Sports commentary, analysis and investigations. Coming to this page.</p></div>
+  </div>
+</div></section>
+
+<section class="cta-band"><div class="wrap">
+  <h2>Hear it. Then run it.</h2>
+  <p class="lead">Take what you hear into your own Championship Conversation.</p>
+  <div class="btn-row"><a class="btn btn-dark arrow" href="#connect">Have a Championship Conversation</a><a class="btn" href="#connect">Connect</a></div>
+</div></section>
+</main><main class="pv-page" data-page="coaching" data-title="Coaching &amp; Mentoring | THEBRIANWARNER™" hidden>
+<section class="hero hero-page"><div class="wrap">
+  <p class="eyebrow"><b>COACH'S OFFICE</b> · Coaching / Mentoring</p>
+  <h1>Get coached up.</h1>
+  <p class="lead">The Championship Performance System™ is an operating system for pressure. Here's how to run it with Brian.</p>
+  <div class="btn-row"><a class="btn btn-gold arrow" href="#connect">Start with a conversation</a></div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <div class="band-head"><p class="eyebrow"><b>THE PATH</b></p><h2>From the first yes to the stage.</h2></div>
+  <ol class="steps">
+    <li><span class="down">1ST</span><div><h4>Championship Conversation</h4><p>One-on-one. The front door. Create movement on the pressure you're under now. <a href="#championship-conversation">Details</a></p></div></li>
+    <li><span class="down">2ND</span><div><h4>Saturday School</h4><p>The conversation in a large-format Zoom workshop. <a href="#saturday-school">Details</a></p></div></li>
+    <li><span class="down">3RD</span><div><h4>Field Pass</h4><p>Premium membership: coaching, courses, Mini Camp, downloads, workbooks and exclusive episodes.</p></div></li>
+    <li><span class="down">4TH</span><div><h4>Keynote &amp; organizations</h4><p>Brian on your stage, or the system licensed into your organization.</p></div></li>
+  </ol>
+</div></section>
+
+<section class="band band-field" id="organizations"><div class="wrap split">
+  <div class="stack">
+    <p class="eyebrow"><b>ORGANIZATIONS</b> · CPS Licensing</p>
+    <h2>Bring the system in.</h2>
+    <p class="lead">License the Championship Performance System™ for your team, school, athletic program or company.</p>
+    <p class="muted">Championship habits apply the same on the field, in the classroom and in professional life. The Championship Workbook has tracks for middle and high school students, student-athletes, college programs and professionals.</p>
+    <div class="btn-row"><a class="btn arrow" href="#connect">Talk licensing</a></div>
+  </div>
+  <div class="stack">
+    <p class="eyebrow"><b>SPEAKING</b> · Keynotes</p>
+    <h2>Story, not resume.</h2>
+    <p class="lead">D-I football, the U.S. Marshals, defense investigation and the sideline, delivered as one story about operating under pressure.</p>
+    <div class="btn-row"><a class="btn arrow" href="#connect">Book Brian</a></div>
+  </div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <div class="band-head"><p class="eyebrow"><b>TOOLS</b> · Books &amp; workbooks</p><h2>How you build a champion, page by page.</h2>
+  <p class="muted">The Field Manual teaches the system. The Workbook develops understanding. The Daily Planner governs execution.</p></div>
+  <div class="grid grid-3"><div class="tile"><span class="tag">Coach's Office</span><h3>Operation: I Am a Champion™</h3><p>The book. Available on Amazon (KDP). Second edition in development.</p></div><a class="tile" href="https://championshipworkbook.com" target="_blank" rel="noopener"><span class="tag">Coach's Office</span><h3>Championship Workbook</h3><p>Develops understanding, page by page. For students, student-athletes, programs and professionals.</p><span class="go">Open</span></a><div class="tile"><span class="tag">Coach's Office</span><h3>Championship Daily Planner</h3><p>Governs execution. Coming soon.</p></div></div>
+</div></section>
+
+<section class="cta-band"><div class="wrap">
+  <h2>Your next first down starts with one conversation.</h2>
+  <p class="lead">Lead with the pressure you're under right now. We'll find the next play.</p>
+  <div class="btn-row"><a class="btn btn-dark arrow" href="#connect">Have a Championship Conversation</a><a class="btn" href="#connect">Connect</a></div>
+</div></section>
+</main><main class="pv-page" data-page="team-store" data-title="Team Store | THEBRIANWARNER™" hidden>
+<section class="hero hero-page"><div class="wrap">
+  <p class="eyebrow"><b>TEAM STORE</b> · Official gear</p>
+  <h1>Wear the standard.</h1>
+  <p class="lead">Every piece carries doctrine from the record. Request yours and Brian's team will follow up with sizes, pricing and shipping.</p>
+  
+</div></section>
+
+<section class="band"><div class="wrap">
+  <div class="band-head"><p class="eyebrow"><b>THE COLLECTION</b></p><h2>Current drops.</h2></div>
+  <div class="products"><article class="product" id="acquitted">
+  <div class="tee"><svg viewBox="0 0 200 200" aria-hidden="true"><path fill="#22324f" stroke="#2b3b58" stroke-width="2" d="M70 22 L50 28 L14 52 L30 86 L50 76 L50 182 L150 182 L150 76 L170 86 L186 52 L150 28 L130 22 C124 36 112 42 100 42 C88 42 76 36 70 22 Z"/></svg><span class="print">ACQUITTED</span></div>
+  <span class="meta">Team Store</span>
+  <h3>ACQUITTED</h3>
+  <a class="btn" href="#connect">Request yours</a>
+</article><article class="product" id="big-45">
+  <div class="tee"><svg viewBox="0 0 200 200" aria-hidden="true"><path fill="#22324f" stroke="#2b3b58" stroke-width="2" d="M70 22 L50 28 L14 52 L30 86 L50 76 L50 182 L150 182 L150 76 L170 86 L186 52 L150 28 L130 22 C124 36 112 42 100 42 C88 42 76 36 70 22 Z"/></svg><span class="print">BIG 45</span></div>
+  <span class="meta">Team Store</span>
+  <h3>BIG 45</h3>
+  <a class="btn" href="#connect">Request yours</a>
+</article><article class="product" id="first-in-first-out">
+  <div class="tee"><svg viewBox="0 0 200 200" aria-hidden="true"><path fill="#22324f" stroke="#2b3b58" stroke-width="2" d="M70 22 L50 28 L14 52 L30 86 L50 76 L50 182 L150 182 L150 76 L170 86 L186 52 L150 28 L130 22 C124 36 112 42 100 42 C88 42 76 36 70 22 Z"/></svg><span class="print long">FIRST IN / FIRST OUT</span></div>
+  <span class="meta">Team Store</span>
+  <h3>FIRST IN / FIRST OUT</h3>
+  <a class="btn" href="#connect">Request yours</a>
+</article><article class="product" id="free-dem-boys">
+  <div class="tee"><svg viewBox="0 0 200 200" aria-hidden="true"><path fill="#22324f" stroke="#2b3b58" stroke-width="2" d="M70 22 L50 28 L14 52 L30 86 L50 76 L50 182 L150 182 L150 76 L170 86 L186 52 L150 28 L130 22 C124 36 112 42 100 42 C88 42 76 36 70 22 Z"/></svg><span class="print long">FREE DEM BOYS</span></div>
+  <span class="meta">Team Store</span>
+  <h3>FREE DEM BOYS</h3>
+  <a class="btn" href="#connect">Request yours</a>
+</article><article class="product" id="get-coached-up">
+  <div class="tee"><svg viewBox="0 0 200 200" aria-hidden="true"><path fill="#22324f" stroke="#2b3b58" stroke-width="2" d="M70 22 L50 28 L14 52 L30 86 L50 76 L50 182 L150 182 L150 76 L170 86 L186 52 L150 28 L130 22 C124 36 112 42 100 42 C88 42 76 36 70 22 Z"/></svg><span class="print long">GET COACHED UP</span></div>
+  <span class="meta">Team Store</span>
+  <h3>GET COACHED UP</h3>
+  <a class="btn" href="#connect">Request yours</a>
+</article></div>
+</div></section>
+
+<section class="band band-field"><div class="wrap">
+  <div class="band-head"><p class="eyebrow"><b>BOOKS &amp; TOOLS</b></p><h2>Off the shelf.</h2></div>
+  <div class="grid grid-3"><div class="tile"><span class="tag">Coach's Office</span><h3>Operation: I Am a Champion™</h3><p>The book. Available on Amazon (KDP). Second edition in development.</p></div><a class="tile" href="https://championshipworkbook.com" target="_blank" rel="noopener"><span class="tag">Coach's Office</span><h3>Championship Workbook</h3><p>Develops understanding, page by page. For students, student-athletes, programs and professionals.</p><span class="go">Open</span></a><div class="tile"><span class="tag">Coach's Office</span><h3>Championship Daily Planner</h3><p>Governs execution. Coming soon.</p></div></div>
+</div></section>
+
+<section class="cta-band"><div class="wrap">
+  <h2>The store must exist.</h2>
+  <p class="lead">Want a piece for your team, program or event? Tell us what you need.</p>
+  <div class="btn-row"><a class="btn btn-dark arrow" href="#connect">Start a team order</a><a class="btn" href="#connect">Connect</a></div>
+</div></section>
+</main><main class="pv-page" data-page="saturday-school" data-title="Saturday School | THEBRIANWARNER™" hidden>
+<section class="hero hero-page"><div class="wrap">
+  <p class="eyebrow"><b>FIELD PASS</b> · Saturday School</p>
+  <h1>Saturday School is in session.</h1>
+  <p class="lead">The Championship Conversation™, delivered as a large-format Zoom workshop. It sits between the one-on-one conversation and the keynote stage.</p>
+  <div class="btn-row"><a class="btn btn-gold arrow" href="#connect">Save my seat</a></div>
+</div></section>
+
+<section class="band"><div class="wrap split">
+  <div class="stack">
+    <p class="eyebrow"><b>THE FORMAT</b></p>
+    <h2>A room full of people. One playbook.</h2>
+    <p class="lead">Same questions as the one-on-one conversation, worked through together. You hear other people's film and you see your own more clearly.</p>
+  </div>
+  <dl class="record">
+    <div><dt>Where</dt><dd>Live on Zoom</dd></div>
+    <div><dt>Who</dt><dd>Anyone carrying pressure: athletes, parents, professionals, coaches, students</dd></div>
+    <div><dt>What you bring</dt><dd>The pressure you're under right now</dd></div>
+    <div><dt>What you leave with</dt><dd>Your next first down</dd></div>
+    <div><dt>Access</dt><dd>Part of Field Pass. Dates announced to the list.</dd></div>
+  </dl>
+</div></section>
+
+<section class="band band-field"><div class="wrap">
+  <div class="band-head"><p class="eyebrow"><b>THE CURRICULUM</b></p><h2>On the board.</h2></div>
+  <ol class="questions"><li><span>Q01</span>Who are you right now?</li><li><span>Q02</span>Where are you playing from?</li><li><span>Q03</span>What&#x27;s putting pressure on you?</li><li><span>Q04</span>What scoreboard are you using?</li><li><span>Q05</span>What penalties keep showing up?</li><li><span>Q06</span>What is your next first down?</li></ol>
+</div></section>
+
+<section class="cta-band"><div class="wrap">
+  <h2>Class is filling up.</h2>
+  <p class="lead">Get on the list for the next Saturday School date.</p>
+  <div class="btn-row"><a class="btn btn-dark arrow" href="#connect">Save my seat</a><a class="btn" href="#connect">Connect</a></div>
+</div></section>
+</main><main class="pv-page" data-page="investigator-training" data-title="Investigator Training | THEBRIANWARNER™" hidden>
+<section class="hero hero-page"><div class="wrap">
+  <p class="eyebrow"><b>DEFENSE INVESTIGATOR WARNER</b> · Investigator Training</p>
+  <h1>Slow it down. Work the case.</h1>
+  <p class="lead">Training built from the field by a federal criminal defense investigator and former Deputy U.S. Marshal. Process, pressure and developing people who do this work.</p>
+  <div class="btn-row"><a class="btn btn-gold arrow" href="#connect">Request training</a></div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <div class="band-head"><p class="eyebrow"><b>WHAT'S COVERED</b></p><h2>How the work actually gets done.</h2></div>
+  <div class="grid grid-3">
+    <div class="tile"><span class="tag">Intake</span><h3>Case assignments</h3><p>Hallway requests and formal investigation requests. What the attorney actually needs investigated, and how to confirm it before you move.</p></div>
+    <div class="tile"><span class="tag">Discovery</span><h3>Discovery review</h3><p>Breaking discovery down by system so nothing hides inside a hundred-page PDF.</p></div>
+    <div class="tile"><span class="tag">Courtroom</span><h3>Reading the room</h3><p>Arriving early, knowing the players, and recognizing when a hearing has escalated and the stakes have stepped up.</p></div>
+    <div class="tile"><span class="tag">Field</span><h3>Field position</h3><p>What play are we running? Down and distance? How much time do we have? Football language as operating language.</p></div>
+    <div class="tile"><span class="tag">Standard</span><h3>Speed vs. quality</h3><p>Slowing things down so fast work doesn't turn into missed work.</p></div>
+    <div class="tile"><span class="tag">Lineage</span><h3>The operational standard</h3><p>How federal law enforcement habits carry into defense investigation.</p></div>
+  </div>
+</div></section>
+
+<section class="band band-field"><div class="wrap split">
+  <div class="stack">
+    <p class="eyebrow"><b>FORMATS</b></p>
+    <h2>Train the team.</h2>
+  </div>
+  <dl class="record">
+    <div><dt>Workshops</dt><dd>For investigator teams, defender offices and legal organizations</dd></div>
+    <div><dt>One-on-one</dt><dd>Mentoring for new and developing investigators</dd></div>
+    <div><dt>Workbook</dt><dd>Investigator Workbook, in development</dd></div>
+    <div><dt>Podcast</dt><dd><a href="#media">Defense Investigator Warner</a>, the Evidence Room</dd></div>
+  </dl>
+</div></section>
+
+<section class="cta-band"><div class="wrap">
+  <h2>Build better investigators.</h2>
+  <p class="lead">Tell us about your team and what you need trained.</p>
+  <div class="btn-row"><a class="btn btn-dark arrow" href="#connect">Request training</a><a class="btn" href="#connect">Connect</a></div>
+</div></section>
+</main><main class="pv-page" data-page="connect" data-title="Connect | THEBRIANWARNER™" hidden>
+<section class="hero hero-page"><div class="wrap">
+  <p class="eyebrow"><b>CONNECT</b> · Player's Lounge</p>
+  <h1>Call the play.</h1>
+  <p class="lead">Tell Brian what you need. Pick a topic and send it over.</p>
+  
+</div></section>
+
+<section class="band"><div class="wrap split split-wide">
+  <form id="connect-form" class="form" data-email="" novalidate>
+    <div class="field"><label for="cf-name">Name</label><input id="cf-name" name="name" type="text" autocomplete="name" required></div>
+    <div class="field"><label for="cf-email">Email</label><input id="cf-email" name="email" type="email" autocomplete="email" required></div>
+    <div class="field"><label for="cf-topic">What do you need?</label>
+      <select id="cf-topic" name="topic">
+        <option value="championship-conversation">Championship Conversation</option>
+        <option value="coaching">Coaching / Mentoring</option>
+        <option value="saturday-school">Saturday School</option>
+        <option value="investigator-training">Investigator Training</option>
+        <option value="organizations">CPS Licensing / Organizations</option>
+        <option value="speaking">Speaking / Keynote</option>
+        <option value="media">Media / Podcast guest</option>
+        <option value="team-store">Team Store order</option>
+        <option value="other">Something else</option>
+      </select></div>
+    <div class="field"><label for="cf-message">Message</label><textarea id="cf-message" name="message" required placeholder="What's putting pressure on you right now?"></textarea></div>
+    <div class="btn-row"><button class="btn btn-gold arrow" type="submit">Send</button></div>
+    <p id="cf-status" class="form-status" role="status" hidden></p>
+    <p class="form-note">Send opens your email app with the message ready to go.</p>
+  </form>
+  <div class="stack">
+    <p class="eyebrow"><b>QUICK ROUTES</b></p>
+    <div class="grid">
+      <a class="tile" href="#connect"><span class="tag">Front door</span><h4>Championship Conversation</h4><span class="go">Book</span></a>
+      <a class="tile" href="#team-store"><span class="tag">Gear</span><h4>Team Store</h4><span class="go">Shop</span></a>
+      <a class="tile" href="#media"><span class="tag">Listen</span><h4>Podcasts</h4><span class="go">Inside the Booth</span></a>
+    </div>
+  </div>
+</div></section>
+</main><main class="pv-page" data-page="404" data-title="Page Not Found | THEBRIANWARNER™" hidden>
+<section class="hero hero-page"><div class="wrap">
+  <p class="eyebrow"><b>FLAG ON THE PLAY</b> · 404</p>
+  <h1>Wrong route.</h1>
+  <p class="lead">That page isn't on the field. Reset and run it back.</p>
+  <div class="btn-row"><a class="btn btn-gold arrow" href="#home">Back to the stadium</a><a class="btn" href="#connect">Connect</a></div>
+</div></section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="cols">
+      <div class="stack">
+        <div class="foot-brand">THEBRIANWARNER<sup>™</sup></div>
+        <p class="muted">An operating system for pressure. Teaching by proximity through championship conversation.</p>
+        <div class="btn-row"><a class="btn btn-gold" href="#connect">Have a Championship Conversation</a></div>
+      </div>
+      <div>
+        <h4>The Stadium</h4>
+        <ul>
+          <li><a href="#story">Story</a></li>
+          <li><a href="#championship-conversation">Championship Conversation</a></li>
+          <li><a href="#media">Media / Podcast</a></li>
+          <li><a href="#team-store">Team Store</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Work with Brian</h4>
+        <ul>
+          <li><a href="#coaching">Coaching / Mentoring</a></li>
+          <li><a href="#saturday-school">Saturday School</a></li>
+          <li><a href="#investigator-training">Investigator Training</a></li>
+          <li><a href="#connect">Connect</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fine"><span>© <span data-year>2026</span> THEBRIANWARNER™. All rights reserved.</span><span>Move the chains.</span></div>
+  </div>
+</footer>
+<script>/* THEBRIANWARNER site script — menu, contact form. No dependencies. */
+(function () {
+  document.documentElement.classList.remove("no-js");
+
+  // Mobile menu
+  var btn = document.querySelector(".menu-btn");
+  var nav = document.getElementById("site-nav");
+  if (btn && nav) {
+    btn.addEventListener("click", function () {
+      var open = nav.classList.toggle("open");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      btn.querySelector(".label").textContent = open ? "Close" : "Menu";
+    });
+    nav.addEventListener("click", function (e) {
+      if (e.target.closest("a")) { nav.classList.remove("open"); btn.setAttribute("aria-expanded", "false"); btn.querySelector(".label").textContent = "Menu"; }
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && nav.classList.contains("open")) { nav.classList.remove("open"); btn.setAttribute("aria-expanded", "false"); btn.querySelector(".label").textContent = "Menu"; btn.focus(); }
+    });
+  }
+
+  // Footer year
+  var y = document.querySelector("[data-year]");
+  if (y) y.textContent = String(new Date().getFullYear());
+
+  // Contact form: prefill from links like connect.html?topic=saturday-school or ?product=ACQUITTED
+  var form = document.getElementById("connect-form");
+  if (!form) return;
+  var topic = document.getElementById("cf-topic");
+  var msg = document.getElementById("cf-message");
+  try {
+    var q = new URLSearchParams(window.location.search);
+    if (q.get("topic") && topic) {
+      for (var i = 0; i < topic.options.length; i++) {
+        if (topic.options[i].value === q.get("topic")) topic.selectedIndex = i;
+      }
+    }
+    if (q.get("product")) {
+      topic.value = "team-store";
+      msg.value = "Team Store request: " + q.get("product") + "\nSize:\nQuantity:\nShip to (city/state):\n";
+    }
+  } catch (err) { /* older browser: no prefill */ }
+
+  var status = document.getElementById("cf-status");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var to = form.getAttribute("data-email") || "";
+    var name = document.getElementById("cf-name").value.trim();
+    var email = document.getElementById("cf-email").value.trim();
+    var t = topic.options[topic.selectedIndex].text;
+    if (!name || !email || !msg.value.trim()) {
+      status.hidden = false;
+      status.textContent = "Fill in your name, email and message so Brian has what he needs to respond.";
+      return;
+    }
+    if (!to) {
+      status.hidden = false;
+      status.textContent = "The contact inbox for this site hasn't been set yet. Check back soon.";
+      return;
+    }
+    var subject = "THEBRIANWARNER | " + t + " | " + name;
+    var body = "Name: " + name + "\nEmail: " + email + "\nTopic: " + t + "\n\n" + msg.value.trim();
+    window.location.href = "mailto:" + to + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    status.hidden = false;
+    status.textContent = "Your email app should open with the message ready. Press send there. If nothing opened, email " + to + " directly.";
+  });
+})();
+</script>
+<script>
+(function(){
+  var pages=[].slice.call(document.querySelectorAll(".pv-page"));
+  function show(){
+    var id=(location.hash||"#home").slice(1); if(!pages.some(function(p){return p.dataset.page===id})) id="home";
+    pages.forEach(function(p){p.hidden=p.dataset.page!==id;});
+    document.querySelectorAll(".site-nav a").forEach(function(a){ if(a.getAttribute("href")==="#"+id) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
+    window.scrollTo(0,0);
+  }
+  window.addEventListener("hashchange",show); show();
+})();</script>
+
+</body></html>
