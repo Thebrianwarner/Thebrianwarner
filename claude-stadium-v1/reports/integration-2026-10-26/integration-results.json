@@ -1,0 +1,142 @@
+[
+ {
+  "check": "Every page loads (HTTP 200) and every internal link resolves, served from a /Thebrianwarner/ subfolder",
+  "pass": true,
+  "detail": "[]"
+ },
+ {
+  "check": "Pages reached by crawling from the Stadium",
+  "pass": true,
+  "detail": "['index.html', 'rooms/index.html', 'rooms/team-store.html', 'rooms/saturday-school.html', 'rooms/defense-investigator.html', 'rooms/film-room.html', 'rooms/coachs-office.html', 'rooms/championship-conversation.html', 'rooms/operation.html']"
+ },
+ {
+  "check": "phone-320: no sideways scroll on any page",
+  "pass": true,
+  "detail": "{}"
+ },
+ {
+  "check": "phone-320: no script errors",
+  "pass": true,
+  "detail": "[]"
+ },
+ {
+  "check": "phone-320: brand centered on room pages (Oct 11 QB1 direction)",
+  "pass": true,
+  "detail": "{}"
+ },
+ {
+  "check": "phone-390: no sideways scroll on any page",
+  "pass": true,
+  "detail": "{}"
+ },
+ {
+  "check": "phone-390: no script errors",
+  "pass": true,
+  "detail": "[]"
+ },
+ {
+  "check": "phone-390: brand centered on room pages (Oct 11 QB1 direction)",
+  "pass": true,
+  "detail": "{}"
+ },
+ {
+  "check": "phone-landscape: no sideways scroll on any page",
+  "pass": true,
+  "detail": "{}"
+ },
+ {
+  "check": "phone-landscape: no script errors",
+  "pass": true,
+  "detail": "[]"
+ },
+ {
+  "check": "phone-landscape: brand centered on room pages (Oct 11 QB1 direction)",
+  "pass": true,
+  "detail": "{}"
+ },
+ {
+  "check": "fold-closed: no sideways scroll on any page",
+  "pass": true,
+  "detail": "{}"
+ },
+ {
+  "check": "fold-closed: no script errors",
+  "pass": true,
+  "detail": "[]"
+ },
+ {
+  "check": "fold-closed: brand centered on room pages (Oct 11 QB1 direction)",
+  "pass": true,
+  "detail": "{}"
+ },
+ {
+  "check": "fold-open: no sideways scroll on any page",
+  "pass": true,
+  "detail": "{}"
+ },
+ {
+  "check": "fold-open: no script errors",
+  "pass": true,
+  "detail": "[]"
+ },
+ {
+  "check": "fold-open: brand centered on room pages (Oct 11 QB1 direction)",
+  "pass": true,
+  "detail": "{}"
+ },
+ {
+  "check": "tablet: no sideways scroll on any page",
+  "pass": true,
+  "detail": "{}"
+ },
+ {
+  "check": "tablet: no script errors",
+  "pass": true,
+  "detail": "[]"
+ },
+ {
+  "check": "tablet: brand centered on room pages (Oct 11 QB1 direction)",
+  "pass": true,
+  "detail": "{}"
+ },
+ {
+  "check": "desktop: no sideways scroll on any page",
+  "pass": true,
+  "detail": "{}"
+ },
+ {
+  "check": "desktop: no script errors",
+  "pass": true,
+  "detail": "[]"
+ },
+ {
+  "check": "desktop: brand centered on room pages (Oct 11 QB1 direction)",
+  "pass": true,
+  "detail": "{}"
+ },
+ {
+  "check": "Phone menu shows a link to the room previews",
+  "pass": true,
+  "detail": "1"
+ },
+ {
+  "check": "Menu link opens the room previews index",
+  "pass": true,
+  "detail": "http://127.0.0.1:8766/Thebrianwarner/rooms/index.html"
+ },
+ {
+  "check": "Room page returns to the interactive Stadium home",
+  "pass": true,
+  "detail": "http://127.0.0.1:8766/Thebrianwarner/index.html#home"
+ },
+ {
+  "check": "Stadium flip cards still flip after integration",
+  "pass": true,
+  "detail": ""
+ },
+ {
+  "check": "Desktop (1440px) shows a visible way into the room previews",
+  "pass": true,
+  "detail": "1"
+ }
+]
