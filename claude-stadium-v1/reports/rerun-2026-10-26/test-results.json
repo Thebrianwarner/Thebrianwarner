@@ -1,0 +1,234 @@
+{
+  "viewports": {
+    "phone-portrait": {
+      "pages": 12,
+      "sideways_overflow_px": {},
+      "errors": []
+    },
+    "phone-landscape": {
+      "pages": 12,
+      "sideways_overflow_px": {},
+      "errors": []
+    },
+    "phone-small": {
+      "pages": 12,
+      "sideways_overflow_px": {},
+      "errors": []
+    },
+    "foldable-closed": {
+      "pages": 12,
+      "sideways_overflow_px": {},
+      "errors": []
+    },
+    "foldable-open": {
+      "pages": 12,
+      "sideways_overflow_px": {},
+      "errors": []
+    },
+    "tablet": {
+      "pages": 12,
+      "sideways_overflow_px": {},
+      "errors": []
+    },
+    "desktop": {
+      "pages": 12,
+      "sideways_overflow_px": {},
+      "errors": []
+    }
+  },
+  "checks": [
+    {
+      "check": "phone-portrait: no sideways scroll",
+      "pass": true,
+      "detail": "{}"
+    },
+    {
+      "check": "phone-portrait: no script errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "phone-portrait: flip card toggles on tap/click",
+      "pass": true,
+      "detail": "flip -> flip is-flipped"
+    },
+    {
+      "check": "phone-portrait: Championship Ladder held off public view",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "phone-landscape: no sideways scroll",
+      "pass": true,
+      "detail": "{}"
+    },
+    {
+      "check": "phone-landscape: no script errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "phone-landscape: flip card toggles on tap/click",
+      "pass": true,
+      "detail": "flip -> flip is-flipped"
+    },
+    {
+      "check": "phone-landscape: Championship Ladder held off public view",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "phone-small: no sideways scroll",
+      "pass": true,
+      "detail": "{}"
+    },
+    {
+      "check": "phone-small: no script errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "phone-small: flip card toggles on tap/click",
+      "pass": true,
+      "detail": "flip -> flip is-flipped"
+    },
+    {
+      "check": "phone-small: Championship Ladder held off public view",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "foldable-closed: no sideways scroll",
+      "pass": true,
+      "detail": "{}"
+    },
+    {
+      "check": "foldable-closed: no script errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "foldable-closed: flip card toggles on tap/click",
+      "pass": true,
+      "detail": "flip -> flip is-flipped"
+    },
+    {
+      "check": "foldable-closed: Championship Ladder held off public view",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "foldable-open: no sideways scroll",
+      "pass": true,
+      "detail": "{}"
+    },
+    {
+      "check": "foldable-open: no script errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "foldable-open: flip card toggles on tap/click",
+      "pass": true,
+      "detail": "flip -> flip is-flipped"
+    },
+    {
+      "check": "foldable-open: Championship Ladder held off public view",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "tablet: no sideways scroll",
+      "pass": true,
+      "detail": "{}"
+    },
+    {
+      "check": "tablet: no script errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "tablet: flip card toggles on tap/click",
+      "pass": true,
+      "detail": "flip -> flip is-flipped"
+    },
+    {
+      "check": "tablet: Championship Ladder held off public view",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "desktop: no sideways scroll",
+      "pass": true,
+      "detail": "{}"
+    },
+    {
+      "check": "desktop: no script errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "desktop: flip card toggles on tap/click",
+      "pass": true,
+      "detail": "flip -> flip is-flipped"
+    },
+    {
+      "check": "desktop: Championship Ladder held off public view",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "No 'Live Cast' anywhere",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "No preview ribbon",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "Media lists 4 shows, no Million Dollar Opportunity",
+      "pass": true,
+      "detail": "['BDUB v. BDUB', 'Defense Investigator Warner', 'Marshal 46', 'Sixty Seconds Go']"
+    },
+    {
+      "check": "MDO workshop destination visible on Coaching",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "Saturday School makes no 'in session' claim",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "Contact form honest when inbox unset",
+      "pass": true,
+      "detail": "The contact inbox for this site hasn't been set yet. Check back soon."
+    },
+    {
+      "check": "Unknown route shows 404 page",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "Phone menu opens",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "Phone dock present",
+      "pass": true,
+      "detail": "['#home', '#championship-conversation', '#media', '#team-store', '#site-nav']"
+    },
+    {
+      "check": "Every in-site link resolves",
+      "pass": true,
+      "detail": "[]"
+    }
+  ],
+  "external_links": [
+    "https://championshipworkbook.com/"
+  ]
+}
